@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ArrowUpRight } from 'lucide-react';
-import ProjectCard from "./ProjectCard";
 import { useSite } from "../context/SiteContext";
 
 export default function Projects() {
