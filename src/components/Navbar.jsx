@@ -16,15 +16,15 @@ export default function Navbar() {
   }, [open]);
 
   const navLinks = [
-    { label: "Home", href: "#" },
-    { label: "About Us", href: "#about" },
-    { label: "Our Expertise", href: "#services" },
-    { label: "Our Approach", href: "#approach" },
-    { label: "Our Services", href: "#detailed-services" },
-    { label: "Why Choose Us", href: "#why-choose-us" },
-    { label: "Our Work", href: "#projects" },
-    { label: "Contact", href: "#contact" },
-  ].filter(link => link.label !== "Our Work" || settings.showProjects);
+    { label: "Home", href: "#", show: true },
+    { label: "About Us", href: "#about", show: settings.showAbout },
+    { label: "Our Expertise", href: "#expertise", show: settings.showExpertise },
+    { label: "Our Approach", href: "#approach", show: settings.showApproach },
+    { label: "Our Services", href: "#detailed-services", show: settings.showServices },
+    { label: "Why Choose Us", href: "#why-choose-us", show: settings.showWhyChooseUs },
+    { label: "Our Work", href: "#projects", show: settings.showProjects },
+    { label: "Contact", href: "#contact", show: settings.showContact },
+  ].filter(link => link.show);
 
   return (
     <header className="fixed top-0 left-0 w-full z-50">
@@ -52,12 +52,14 @@ export default function Navbar() {
 
           {/* Desktop Right Action */}
           <div className="hidden md:flex items-center">
-            <a
-              href="#contact"
-              className="bg-black text-white px-6 py-2.5 rounded-full font-outfit text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-black/80 transition-all active:scale-95"
-            >
-              {settings.hero.primaryBtn}
-            </a>
+            {settings.showContact && (
+              <a
+                href="#contact"
+                className="bg-black text-white px-8 py-3 rounded-full font-outfit text-[11px] font-bold uppercase tracking-[0.2em] transition-all hover:bg-black/80 hover:scale-105 active:scale-95 shadow-lg shadow-black/10"
+              >
+                Start Your Project
+              </a>
+            )}
           </div>
 
           {/* Dual-State Mobile Toggle Button */}

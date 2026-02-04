@@ -18,7 +18,7 @@ export default React.memo(function Services() {
   const expertise = settings.expertise;
 
   return (
-    <section id="services" className="py-24 bg-[#f8f8f8]">
+    <section id="expertise" className="py-24 bg-[#f8f8f8]">
       <div className="max-w-7xl mx-auto px-8">
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-16">
@@ -35,11 +35,11 @@ export default React.memo(function Services() {
             {expertise.items.map((s, i) => {
               const Icon = IconMap[s.icon] || Box;
               return (
-                <div key={i} className="group cursor-default relative bg-white p-6 md:p-8 transition-all duration-300 ease-out hover:-translate-y-[6px] hover:shadow-xl border border-black/5 rounded-2xl flex flex-col items-start gap-4">
-                  <div className="p-3 bg-gray-50 rounded-xl transition-all duration-300 group-hover:bg-black group-hover:text-white shrink-0">
-                    <Icon size={24} />
+                <div key={i} className="group cursor-default relative p-8 transition-all duration-300 ease-out hover:bg-white hover:shadow-2xl hover:shadow-black/5 hover:-translate-y-2 border border-transparent hover:border-black/5 rounded-2xl flex flex-col items-start gap-4 opacity-80 hover:opacity-100">
+                  <div className="shrink-0 text-black transition-transform duration-300 group-hover:scale-110">
+                    <Icon size={28} strokeWidth={1.5} />
                   </div>
-                  <p className="text-gray-800 text-sm md:text-[15px] transition-colors duration-300 font-normal leading-relaxed">
+                  <p className="text-black text-sm md:text-[15px] font-normal leading-relaxed">
                     {s.desc}
                   </p>
                 </div>

@@ -16,6 +16,7 @@ const Contact = lazy(() => import("./components/Contact"));
 const TermsOfService = lazy(() => import("./components/TermsOfService"));
 const PrivacyPolicy = lazy(() => import("./components/PrivacyPolicy"));
 const AdminDashboard = lazy(() => import("./components/AdminDashboard"));
+import DynamicSection from "./components/DynamicSection";
 
 // Simple lightweight loading component
 const SectionLoader = () => (
@@ -27,21 +28,36 @@ const SectionLoader = () => (
 const MainSite = () => {
   const [isTermsOpen, setIsTermsOpen] = React.useState(false);
   const [isPrivacyOpen, setIsPrivacyOpen] = React.useState(false);
-  const { settings } = useSite();
+  const { settings, loading } = useSite();
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 bg-white z-[100] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-gray-100 border-t-black rounded-full animate-spin" />
+          <p className="font-outfit text-xs font-bold uppercase tracking-[0.2em] animate-pulse">Z'IONIC ARC</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
       <Navbar />
       <main>
         <Hero />
-        <About />
-        <Expertise />
-        <Suspense fallback={<SectionLoader />}>
-          <OurApproach />
-        </Suspense>
-        <Suspense fallback={<SectionLoader />}>
-          <ServicesDetail />
-        </Suspense>
+        {settings.showAbout && <About />}
+        {settings.showExpertise && <Expertise />}
+        {settings.showApproach && (
+          <Suspense fallback={<SectionLoader />}>
+            <OurApproach />
+          </Suspense>
+        )}
+        {settings.showServices && (
+          <Suspense fallback={<SectionLoader />}>
+            <ServicesDetail />
+          </Suspense>
+        )}
 
         {/* Managed by Admin Toggle */}
         {settings.showProjects && (
@@ -50,12 +66,21 @@ const MainSite = () => {
           </Suspense>
         )}
 
-        <Suspense fallback={<SectionLoader />}>
-          <WhyChooseUs />
-        </Suspense>
-        <Suspense fallback={<SectionLoader />}>
-          <Contact />
-        </Suspense>
+        {/* Custom Admin-Created Sections */}
+        {settings.customSections?.map((section, idx) => (
+          <DynamicSection key={idx} section={section} />
+        ))}
+
+        {settings.showWhyChooseUs && (
+          <Suspense fallback={<SectionLoader />}>
+            <WhyChooseUs />
+          </Suspense>
+        )}
+        {settings.showContact && (
+          <Suspense fallback={<SectionLoader />}>
+            <Contact />
+          </Suspense>
+        )}
       </main>
       <Footer
         onOpenTerms={() => setIsTermsOpen(true)}

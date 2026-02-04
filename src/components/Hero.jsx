@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, ArrowRight } from 'lucide-react';
 import Squares from './Squares';
 import { useSite } from '../context/SiteContext';
 
@@ -76,7 +76,11 @@ export default function Hero() {
       </div>
 
       <div className="relative z-30 max-w-7xl 2xl:max-w-screen-2xl mx-auto px-8 text-center pt-20">
-        <h1 ref={textRef} className="font-montserrat text-6xl md:text-9xl font-medium tracking-tighter leading-[0.9] mb-8 mix-blend-difference text-black/80" dangerouslySetInnerHTML={{ __html: settings.hero.title }} />
+        <h1 ref={textRef} className="font-montserrat text-6xl md:text-9xl font-medium tracking-tighter leading-[0.9] mb-8 mix-blend-difference text-black/80">
+          {settings.hero.title.split(' ').map((word, i) => (
+            <span key={i} className="block">{word}</span>
+          ))}
+        </h1>
 
         <div ref={subTextRef} className="max-w-2xl mx-auto space-y-8">
           <p className="text-xl md:text-2xl font-normal text-gray-800 leading-relaxed">
@@ -84,28 +88,27 @@ export default function Hero() {
           </p>
 
           {/* Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-6">
+          <div className="flex flex-row flex-wrap items-center justify-center gap-6 sm:gap-16 md:gap-24 pt-12 md:pt-16">
+            <button
+              onClick={() => {
+                const servicesSection = document.getElementById('detailed-services');
+                servicesSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="flex items-center gap-4 text-black font-medium text-base md:text-[17px] uppercase tracking-[0.3em] transition-opacity hover:opacity-50"
+            >
+              <span>OUR SERVICES</span>
+              <span className="text-2xl mt-[-2px]">→</span>
+            </button>
             <button
               onClick={() => {
                 const contactSection = document.getElementById('contact');
                 contactSection?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="group relative px-10 py-5 bg-white text-black rounded-full font-bold text-sm uppercase tracking-widest overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl"
+              className="flex items-center gap-4 text-black font-medium text-base md:text-[17px] uppercase tracking-[0.3em] transition-opacity hover:opacity-50"
             >
-              <span className="relative z-10">{settings.hero.primaryBtn}</span>
-              <div className="absolute inset-0 bg-neutral-100 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              <span>CONTACT US</span>
+              <span className="text-2xl mt-[-2px]">→</span>
             </button>
-            {settings.showProjects && (
-              <button
-                onClick={() => {
-                  const projectsSection = document.getElementById('projects');
-                  projectsSection?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="group px-10 py-5 bg-transparent text-white border border-white/20 rounded-full font-bold text-sm uppercase tracking-widest transition-all hover:bg-white hover:text-black hover:border-white shadow-xl"
-              >
-                {settings.hero.secondaryBtn}
-              </button>
-            )}
           </div>
         </div>
       </div>

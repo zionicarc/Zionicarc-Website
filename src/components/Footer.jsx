@@ -8,15 +8,15 @@ export default function Footer({ onOpenTerms, onOpenPrivacy }) {
   const { settings } = useSite();
 
   const links = [
-    { label: "Home", href: "#" },
-    { label: "About Us", href: "#about" },
-    { label: "Our Expertise", href: "#services" },
-    { label: "Our Approach", href: "#approach" },
-    { label: "Our Services", href: "#detailed-services" },
-    { label: "Why Choose Us", href: "#why-choose-us" },
-    { label: "Our Work", href: "#projects" },
-    { label: "Start a Project", href: "#contact" },
-  ].filter(link => link.label !== "Our Work" || settings.showProjects);
+    { label: "Home", href: "#", show: true },
+    { label: "About Us", href: "#about", show: settings.showAbout },
+    { label: "Our Expertise", href: "#expertise", show: settings.showExpertise },
+    { label: "Our Approach", href: "#approach", show: settings.showApproach },
+    { label: "Our Services", href: "#detailed-services", show: settings.showServices },
+    { label: "Why Choose Us", href: "#why-choose-us", show: settings.showWhyChooseUs },
+    { label: "Our Work", href: "#projects", show: settings.showProjects },
+    { label: "Start a Project", href: "#contact", show: settings.showContact },
+  ].filter(link => link.show);
 
   return (
     <footer className="bg-black text-white py-10 md:py-20 border-t border-white/5">

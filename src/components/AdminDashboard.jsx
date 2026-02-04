@@ -2,30 +2,68 @@ import React, { useState } from 'react';
 import { useSite } from '../context/SiteContext';
 import {
     Layout, Eye, EyeOff, Lock, Unlock, ArrowLeft,
-    Home, Info, Briefcase, Zap, Heart, Mail, Save, Plus, Trash2
+    Home, Info, Briefcase, Zap, Heart, Mail, Save, Plus, Trash2, X, LogOut
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import ImageUpload from './ImageUpload';
+import { auth } from '../lib/firebase';
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 
 export default function AdminDashboard() {
-    const { settings, updateSettings } = useSite();
+    const { settings, updateSettings, loading } = useSite();
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [user, setUser] = useState(null);
+    const [authLoading, setAuthLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('general');
     const [localSettings, setLocalSettings] = useState(settings);
+    const [isSaving, setIsSaving] = useState(false);
     const navigate = useNavigate();
 
-    const handleLogin = (e) => {
+    // Sync local settings once Firebase data is loaded
+    React.useEffect(() => {
+        if (!loading) {
+            setLocalSettings(settings);
+        }
+    }, [loading, settings]);
+
+    // Handle Auth state
+    React.useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+            setAuthLoading(false);
+        });
+        return () => unsubscribe();
+    }, []);
+
+    const handleLogin = async (e) => {
         e.preventDefault();
-        if (password === 'Jobisam_30') {
-            setIsAuthenticated(true);
-        } else {
-            alert('Incorrect Password');
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+            alert('Login Failed: ' + error.message);
         }
     };
 
-    const handleSave = () => {
-        updateSettings(localSettings);
-        alert('Settings saved successfully!');
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            navigate('/');
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+    };
+
+    const handleSave = async () => {
+        setIsSaving(true);
+        try {
+            await updateSettings(localSettings);
+            alert('Settings saved successfully to Firebase!');
+        } catch (error) {
+            alert('Error saving settings: ' + error.message);
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     const updateField = (section, field, value) => {
@@ -75,10 +113,23 @@ export default function AdminDashboard() {
         });
     };
 
-    if (!isAuthenticated) {
+    if (loading || authLoading) {
+        return (
+            <div className="min-h-screen bg-black flex items-center justify-center">
+                <div className="w-12 h-12 border-4 border-white/10 border-t-white rounded-full animate-spin" />
+            </div>
+        );
+    }
+
+    if (!user) {
         return (
             <div className="min-h-screen bg-[#f8f8f8] flex items-center justify-center p-6">
                 <div className="w-full max-w-md bg-white border border-black/5 p-8 rounded-3xl shadow-xl">
+                    <div className="flex justify-center mb-6">
+                        <button onClick={() => navigate('/')} className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-black transition-colors">
+                            <ArrowLeft size={14} /> Back to Site
+                        </button>
+                    </div>
                     <div className="flex justify-center mb-8">
                         <div className="p-4 bg-black/5 rounded-2xl">
                             <Lock className="text-black w-8 h-8" />
@@ -87,15 +138,30 @@ export default function AdminDashboard() {
                     <h1 className="text-2xl font-outfit font-bold text-black text-center mb-2 uppercase tracking-widest">Admin Access</h1>
                     <p className="text-gray-600 text-center text-sm mb-8">Enter your secure credentials to manage the studio site.</p>
                     <form onSubmit={handleLogin} className="space-y-4">
-                        <input
-                            type="password"
-                            placeholder="Enter Password"
-                            className="w-full bg-[#fcfcfc] border border-black/5 rounded-xl px-4 py-4 text-black placeholder:text-gray-400 focus:outline-none focus:border-black/10 transition-all font-outfit"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">Email Address</label>
+                            <input
+                                type="email"
+                                placeholder="admin@zionicarc.com"
+                                className="w-full bg-[#fcfcfc] border border-black/5 rounded-xl px-4 py-4 text-black placeholder:text-gray-400 focus:outline-none focus:border-black/10 transition-all font-outfit"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 ml-1">Password</label>
+                            <input
+                                type="password"
+                                placeholder="••••••••"
+                                className="w-full bg-[#fcfcfc] border border-black/5 rounded-xl px-4 py-4 text-black placeholder:text-gray-400 focus:outline-none focus:border-black/10 transition-all font-outfit"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                            />
+                        </div>
                         <button className="w-full bg-black text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-black/90 transition-all active:scale-95 shadow-lg shadow-black/10">
-                            Login Dashboard
+                            Log In
                         </button>
                     </form>
                     <button onClick={() => navigate('/')} className="w-full mt-6 text-gray-500 text-xs uppercase tracking-widest hover:text-black transition-colors flex items-center justify-center gap-2">
@@ -116,7 +182,8 @@ export default function AdminDashboard() {
         { id: 'projects', label: 'Projects', icon: Briefcase },
         { id: 'whyChooseUs', label: 'Why Choose Us', icon: Heart },
         { id: 'contact', label: 'Contact', icon: Mail },
-        { id: 'footer', label: 'Footer', icon: Info }
+        { id: 'footer', label: 'Footer', icon: Info },
+        { id: 'custom', label: 'Custom Sections', icon: Plus }
     ];
 
     return (
@@ -132,12 +199,20 @@ export default function AdminDashboard() {
                     <div className="flex items-center gap-4">
                         <button
                             onClick={handleSave}
-                            className="flex items-center gap-2 bg-black text-white text-xs font-bold uppercase tracking-widest px-6 py-2.5 rounded-full hover:bg-black/90 transition-all shadow-lg shadow-black/10"
+                            disabled={isSaving}
+                            className={`flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-6 py-2.5 rounded-full transition-all shadow-lg ${isSaving ? 'bg-gray-400 cursor-not-allowed text-white' : 'bg-black text-white hover:bg-black/90 shadow-black/10 active:scale-95'}`}
                         >
-                            <Save size={14} /> Save Changes
+                            <Save size={14} /> {isSaving ? 'Saving...' : 'Save Changes'}
                         </button>
                         <button onClick={() => navigate('/')} className="text-xs font-bold uppercase tracking-widest px-6 py-2.5 border border-black/10 rounded-full hover:bg-black hover:text-white transition-all">
                             Live Site
+                        </button>
+                        <button
+                            onClick={handleLogout}
+                            className="p-2.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all"
+                            title="Logout"
+                        >
+                            <LogOut size={20} />
                         </button>
                     </div>
                 </div>
@@ -152,7 +227,10 @@ export default function AdminDashboard() {
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`flex items-center gap-4 px-6 py-4 rounded-2xl text-sm font-bold uppercase tracking-widest transition-all ${activeTab === tab.id ? 'bg-black text-white shadow-xl shadow-black/10' : 'text-gray-400 hover:bg-black/5 hover:text-black'}`}
+                                className={`flex items-center gap-4 px-6 py-4 rounded-2xl text-sm font-bold uppercase tracking-widest transition-all border ${activeTab === tab.id
+                                    ? 'bg-gray-100 text-black border-black/10 shadow-inner'
+                                    : 'bg-white text-gray-400 border-black/5 shadow-sm hover:shadow-md hover:text-black'
+                                    }`}
                             >
                                 <tab.icon size={18} />
                                 {tab.label}
@@ -170,19 +248,31 @@ export default function AdminDashboard() {
                                         <h3 className="text-2xl font-bold uppercase tracking-tight mb-2">Global Settings</h3>
                                         <p className="text-gray-500 text-sm">Manage high-level feature visibility across the site.</p>
                                     </header>
-                                    <div className="flex items-center justify-between p-6 bg-white rounded-2xl border border-black/5 shadow-sm">
-                                        <div>
-                                            <h4 className="font-bold uppercase mb-1 text-black">Projects Section</h4>
-                                            <p className="text-xs text-gray-400 italic font-medium">Toggle "Our Work" section and navigation links.</p>
-                                        </div>
-                                        <button
-                                            onClick={() => setLocalSettings(prev => ({ ...prev, showProjects: !prev.showProjects }))}
-                                            className={`relative w-20 h-10 rounded-full transition-all flex items-center px-1 ${localSettings.showProjects ? 'bg-black' : 'bg-gray-100 border border-black/5'}`}
-                                        >
-                                            <div className={`w-8 h-8 rounded-full transition-all flex items-center justify-center ${localSettings.showProjects ? 'bg-white translate-x-10' : 'bg-gray-300'}`}>
-                                                {localSettings.showProjects ? <Eye size={14} className="text-black" /> : <EyeOff size={14} className="text-gray-600" />}
+                                    <div className="space-y-4">
+                                        {[
+                                            { id: 'showAbout', label: 'About Us Section' },
+                                            { id: 'showExpertise', label: 'Our Expertise Section' },
+                                            { id: 'showApproach', label: 'Our Approach Section' },
+                                            { id: 'showServices', label: 'Our Services Section' },
+                                            { id: 'showProjects', label: 'Our Work (Projects) Section' },
+                                            { id: 'showWhyChooseUs', label: 'Why Choose Us Section' },
+                                            { id: 'showContact', label: 'Contact Section' }
+                                        ].map((toggle) => (
+                                            <div key={toggle.id} className="flex items-center justify-between p-5 bg-white rounded-2xl border border-black/5 shadow-sm">
+                                                <div>
+                                                    <h4 className="font-bold uppercase mb-1 text-black text-xs">{toggle.label}</h4>
+                                                    <p className="text-[10px] text-gray-400 italic font-medium tracking-tight">Toggle visibility in Navbar and on Home Page.</p>
+                                                </div>
+                                                <button
+                                                    onClick={() => setLocalSettings(prev => ({ ...prev, [toggle.id]: !prev[toggle.id] }))}
+                                                    className={`relative w-16 h-8 rounded-full transition-all flex items-center px-1 ${localSettings[toggle.id] ? 'bg-black' : 'bg-gray-100 border border-black/5'}`}
+                                                >
+                                                    <div className={`w-6 h-6 rounded-full transition-all flex items-center justify-center ${localSettings[toggle.id] ? 'bg-white translate-x-8' : 'bg-gray-300'}`}>
+                                                        {localSettings[toggle.id] ? <Eye size={12} className="text-black" /> : <EyeOff size={12} className="text-gray-600" />}
+                                                    </div>
+                                                </button>
                                             </div>
-                                        </button>
+                                        ))}
                                     </div>
                                 </div>
                             )}
@@ -195,7 +285,7 @@ export default function AdminDashboard() {
                                     </header>
                                     <div className="space-y-6">
                                         <div className="space-y-2">
-                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Big Title (HTML Allowed)</label>
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Hero Title</label>
                                             <input
                                                 className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black focus:outline-none focus:border-black/10 transition-all font-outfit"
                                                 value={localSettings.hero.title}
@@ -213,11 +303,11 @@ export default function AdminDashboard() {
                                         </div>
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="space-y-2">
-                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Primary Button Label</label>
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Primary Button</label>
                                                 <input className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit" value={localSettings.hero.primaryBtn} onChange={(e) => updateField('hero', 'primaryBtn', e.target.value)} />
                                             </div>
                                             <div className="space-y-2">
-                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Secondary Button Label</label>
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Secondary Button</label>
                                                 <input className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit" value={localSettings.hero.secondaryBtn} onChange={(e) => updateField('hero', 'secondaryBtn', e.target.value)} />
                                             </div>
                                         </div>
@@ -361,7 +451,7 @@ export default function AdminDashboard() {
                                         </div>
                                         <div className="flex justify-between items-center mb-4">
                                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Service Items</label>
-                                            <button onClick={() => addListItem('services', 'items', { title: 'New Service', subtitle: 'Category', desc: 'Description' })} className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest bg-black/5 hover:bg-black text-gray-500 hover:text-white px-3 py-1 rounded-lg transition-all">
+                                            <button onClick={() => addListItem('services', 'items', { title: 'New Service', subtitle: 'Category', desc: 'Description', img: '' })} className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest bg-black/5 hover:bg-black text-gray-500 hover:text-white px-3 py-1 rounded-lg transition-all">
                                                 <Plus size={10} /> Add Service
                                             </button>
                                         </div>
@@ -374,9 +464,125 @@ export default function AdminDashboard() {
                                                     <input className="w-full bg-transparent text-lg font-bold border-b border-black/10 text-black font-outfit" value={item.title} onChange={(e) => updateListItem('services', 'items', idx, 'title', e.target.value)} />
                                                     <input className="w-full bg-transparent text-xs text-gray-400 uppercase tracking-widest font-outfit" value={item.subtitle} onChange={(e) => updateListItem('services', 'items', idx, 'subtitle', e.target.value)} />
                                                     <textarea className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-500 font-outfit" rows={3} value={item.desc} onChange={(e) => updateListItem('services', 'items', idx, 'desc', e.target.value)} />
+
+                                                    <div className="pt-2">
+                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Service Image</label>
+                                                        <ImageUpload
+                                                            currentImage={item.img}
+                                                            onUploadComplete={(url) => updateListItem('services', 'items', idx, 'img', url)}
+                                                        />
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeTab === 'custom' && (
+                                <div className="space-y-8">
+                                    <header className="flex justify-between items-end">
+                                        <div>
+                                            <h3 className="text-2xl font-bold uppercase tracking-tight mb-2">Custom Sections</h3>
+                                            <p className="text-gray-500 text-sm">Add completely new blocks of content to your site.</p>
+                                        </div>
+                                        <button
+                                            onClick={() => setLocalSettings(prev => ({ ...prev, customSections: [...prev.customSections, { title: 'New Section', desc: 'Section Description', items: [] }] }))}
+                                            className="flex items-center gap-2 bg-black text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-black/90 transition-all"
+                                        >
+                                            <Plus size={14} /> Add New Section
+                                        </button>
+                                    </header>
+
+                                    <div className="space-y-12">
+                                        {localSettings.customSections?.map((section, sIdx) => (
+                                            <div key={sIdx} className="p-8 bg-white border border-black/5 rounded-[2rem] shadow-sm space-y-8 relative group">
+                                                <button
+                                                    onClick={() => setLocalSettings(prev => ({ ...prev, customSections: prev.customSections.filter((_, i) => i !== sIdx) }))}
+                                                    className="absolute top-6 right-6 text-gray-300 hover:text-red-500 transition-colors"
+                                                >
+                                                    <Trash2 size={20} />
+                                                </button>
+
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                                    <div className="space-y-2">
+                                                        <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Section Title</label>
+                                                        <input
+                                                            className="w-full bg-[#fcfcfc] border border-black/5 rounded-xl px-4 py-4 text-xl font-bold text-black font-outfit"
+                                                            value={section.title}
+                                                            onChange={(e) => {
+                                                                const newSections = [...localSettings.customSections];
+                                                                newSections[sIdx].title = e.target.value;
+                                                                setLocalSettings(prev => ({ ...prev, customSections: newSections }));
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className="space-y-2">
+                                                        <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Description</label>
+                                                        <textarea
+                                                            className="w-full bg-[#fcfcfc] border border-black/5 rounded-xl px-4 py-4 text-sm text-gray-600 font-outfit"
+                                                            rows={3}
+                                                            value={section.desc}
+                                                            onChange={(e) => {
+                                                                const newSections = [...localSettings.customSections];
+                                                                newSections[sIdx].desc = e.target.value;
+                                                                setLocalSettings(prev => ({ ...prev, customSections: newSections }));
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="space-y-4 pt-8 border-t border-black/5">
+                                                    <div className="flex justify-between items-center">
+                                                        <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Section Sub-Items / Features</label>
+                                                        <button
+                                                            onClick={() => {
+                                                                const newSections = [...localSettings.customSections];
+                                                                newSections[sIdx].items = [...newSections[sIdx].items, "New Feature Point"];
+                                                                setLocalSettings(prev => ({ ...prev, customSections: newSections }));
+                                                            }}
+                                                            className="text-[10px] font-bold uppercase tracking-widest bg-black/5 px-3 py-1 rounded-lg text-gray-500 hover:bg-black hover:text-white transition-all"
+                                                        >
+                                                            + Add Point
+                                                        </button>
+                                                    </div>
+                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                        {section.items.map((point, pIdx) => (
+                                                            <div key={pIdx} className="flex gap-3">
+                                                                <input
+                                                                    className="flex-1 bg-gray-50 border border-black/5 rounded-lg px-4 py-2 text-sm text-gray-700 font-outfit"
+                                                                    value={point}
+                                                                    onChange={(e) => {
+                                                                        const newSections = [...localSettings.customSections];
+                                                                        newSections[sIdx].items[pIdx] = e.target.value;
+                                                                        setLocalSettings(prev => ({ ...prev, customSections: newSections }));
+                                                                    }}
+                                                                />
+                                                                <button
+                                                                    onClick={() => {
+                                                                        const newSections = [...localSettings.customSections];
+                                                                        newSections[sIdx].items = newSections[sIdx].items.filter((_, i) => i !== pIdx);
+                                                                        setLocalSettings(prev => ({ ...prev, customSections: newSections }));
+                                                                    }}
+                                                                    className="text-gray-300 hover:text-red-500 transition-colors"
+                                                                >
+                                                                    <X size={16} />
+                                                                </button>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+
+                                        {localSettings.customSections?.length === 0 && (
+                                            <div className="py-20 border-2 border-dashed border-black/5 rounded-[3rem] flex flex-col items-center justify-center text-center">
+                                                <div className="w-16 h-16 bg-gray-50 rounded-3xl flex items-center justify-center mb-4">
+                                                    <Plus className="text-gray-300" />
+                                                </div>
+                                                <p className="text-gray-400 font-medium font-outfit">No custom sections yet. <br /> Add one to create new areas on your home page.</p>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             )}
@@ -417,9 +623,14 @@ export default function AdminDashboard() {
                                                             <div className="flex-1 space-y-3">
                                                                 <input className="w-full bg-transparent text-sm font-bold border-b border-black/10 text-black font-outfit" placeholder="Name" value={item.name} onChange={(e) => updateListItem('projects', 'items', idx, 'name', e.target.value)} />
                                                                 <input className="w-full bg-transparent text-xs text-gray-500 border-b border-black/10 font-outfit" placeholder="Location" value={item.location} onChange={(e) => updateListItem('projects', 'items', idx, 'location', e.target.value)} />
-                                                                <div className="grid grid-cols-2 gap-2 mt-2">
-                                                                    <input className="w-full bg-transparent text-[10px] text-gray-400 uppercase tracking-widest border-b border-black/10 font-outfit" placeholder="Type" value={item.type} onChange={(e) => updateListItem('projects', 'items', idx, 'type', e.target.value)} />
-                                                                    <input className="w-full bg-transparent text-[10px] text-gray-400 border-b border-black/10 font-outfit" placeholder="Img URL" value={item.img} onChange={(e) => updateListItem('projects', 'items', idx, 'img', e.target.value)} />
+                                                                <input className="w-full bg-transparent text-[10px] text-gray-400 uppercase tracking-widest border-b border-black/10 font-outfit" placeholder="Type" value={item.type} onChange={(e) => updateListItem('projects', 'items', idx, 'type', e.target.value)} />
+
+                                                                <div className="pt-2">
+                                                                    <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Project Image</label>
+                                                                    <ImageUpload
+                                                                        currentImage={item.img}
+                                                                        onUploadComplete={(url) => updateListItem('projects', 'items', idx, 'img', url)}
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         </div>

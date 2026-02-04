@@ -36,7 +36,7 @@ export default function ServicesDetail() {
                         <div key={index} className="group cursor-default">
                             <div className="overflow-hidden rounded-2xl aspect-[4/5] mb-8 bg-gray-100 shadow-sm transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
                                 <img
-                                    src={images[service.title] || service.image || "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop"}
+                                    src={service.img || images[service.title] || "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop"}
                                     alt={service.title}
                                     className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-in-out scale-100 group-hover:scale-110"
                                     loading="lazy"
