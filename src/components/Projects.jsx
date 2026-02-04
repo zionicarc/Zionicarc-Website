@@ -1,8 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ArrowUpRight } from 'lucide-react';
+import ProjectCard from "./ProjectCard";
+import { useSite } from "../context/SiteContext";
 
 export default function Projects() {
+  const { settings } = useSite();
+  const data = settings.projects;
+
   const projectRef = useRef([]);
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -56,10 +61,10 @@ export default function Projects() {
 
         <div className="flex justify-between items-end mb-16">
           <h2 className="text-3xl md:text-4xl font-outfit font-light tracking-tighter text-black leading-[0.9]">
-            Our Work
+            {data.title}
           </h2>
           <a href="#" className="hidden md:flex items-center gap-2 text-sm uppercase tracking-widest hover:opacity-50 transition-opacity">
-            View All Projects <ArrowUpRight size={16} />
+            {data.description} <ArrowUpRight size={16} />
           </a>
         </div>
 

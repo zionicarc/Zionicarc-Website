@@ -29,7 +29,7 @@ export default function Footer({ onOpenTerms, onOpenPrivacy }) {
               Z'IONIC <span className="font-bold">ARC</span>
             </a>
             <p className="text-gray-500 text-sm leading-relaxed max-w-xs font-normal">
-              Redefining contemporary architecture through visionary design, structural integrity, and sustainable innovation.
+              {settings.footer.tagline}
             </p>
           </div>
 
@@ -97,8 +97,7 @@ export default function Footer({ onOpenTerms, onOpenPrivacy }) {
             <h4 className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/30 mb-8">Studio Hours</h4>
             <div className="space-y-4">
               <p className="text-gray-400 text-sm font-normal">
-                Call Timings: <br />
-                <span className="text-white">9:00 AM – 5:00 PM</span>
+                {settings.footer.timings}
               </p>
               <p className="text-gray-500 text-xs italic font-normal leading-relaxed pt-4 border-t border-white/5">
                 "Architecture should speak of its time and place, but yearn for timelessness."

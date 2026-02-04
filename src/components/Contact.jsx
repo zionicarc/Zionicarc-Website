@@ -1,8 +1,11 @@
 import React from 'react';
 import { Mail, Phone, MessageCircle, ArrowUpRight } from 'lucide-react';
-import { handleEmailClick, handleWhatsAppClick } from '../utils/emailUtils';
+import { handleEmailClick, handleWhatsAppClick, handlePhoneClick } from '../utils/emailUtils';
+import { useSite } from '../context/SiteContext';
 
 export default function Contact() {
+  const { settings } = useSite();
+  const data = settings.contact;
   return (
     <section id="contact" className="py-24 bg-white text-black border-t border-black/5">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
@@ -11,17 +14,16 @@ export default function Contact() {
           {/* Header Content */}
           <div className="lg:col-span-5">
             <h2 className="text-3xl md:text-4xl font-outfit font-light tracking-tighter text-black leading-[0.9] mb-8">
-              Start a Project
+              {data.title}
             </h2>
             <p className="text-gray-600 text-lg font-normal max-w-md mb-10 leading-relaxed">
-              We are ready to transform your architectural vision into reality.
-              Connect with our studio directly through the channels below.
+              {data.description}
             </p>
 
             <div className="inline-flex items-center gap-2 md:gap-3 px-4 md:px-5 py-2 md:py-3 bg-[#f9f9f9] rounded-xl md:rounded-2xl border border-black/5 mt-2 transition-all">
               <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-black rounded-full animate-pulse shrink-0" />
               <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-black/60 whitespace-nowrap">
-                Call Timings: 9:00 AM – 5:00 PM
+                {settings.footer.timings}
               </p>
             </div>
           </div>

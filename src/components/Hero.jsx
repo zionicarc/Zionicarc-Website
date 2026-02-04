@@ -2,9 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ArrowDown } from 'lucide-react';
 
-import Squares from './Squares';
+import { useSite } from '../context/SiteContext';
 
 export default function Hero() {
+  const { settings } = useSite();
   const heroRef = useRef(null);
   const textRef = useRef(null);
   const subTextRef = useRef(null);
@@ -75,13 +76,11 @@ export default function Hero() {
       </div>
 
       <div className="relative z-30 max-w-7xl 2xl:max-w-screen-2xl mx-auto px-8 text-center pt-20">
-        <h1 ref={textRef} className="font-montserrat text-6xl md:text-9xl font-medium tracking-tighter leading-[0.9] mb-8 mix-blend-difference text-black/80">
-          Z'IONIC<br />ARC
-        </h1>
+        <h1 ref={textRef} className="font-montserrat text-6xl md:text-9xl font-medium tracking-tighter leading-[0.9] mb-8 mix-blend-difference text-black/80" dangerouslySetInnerHTML={{ __html: settings.hero.title }} />
 
         <div ref={subTextRef} className="max-w-2xl mx-auto space-y-8">
           <p className="text-xl md:text-2xl font-normal text-gray-800 leading-relaxed">
-            Redefine the skyline. We craft spaces that merge human experience with distinct architectural geometry.
+            {settings.hero.tagline}
           </p>
 
           {/* Buttons */}

@@ -1,23 +1,9 @@
 import React from 'react';
+import { useSite } from '../context/SiteContext';
 
 export default function OurApproach() {
-  const steps = [
-    {
-      no: "01",
-      title: "Fragmentation",
-      desc: "At Z'IONIC ARC, we break our design into layered intersecting volumes allowing multiple perspectives and experiences instead of a single rigid form."
-    },
-    {
-      no: "02",
-      title: "Sustainability",
-      desc: "Our commitment to sustainable materials is rooted in understanding that every choice we make and should support human health, advance social equity, protect ecosystems, mitigate climate impact and contribute to a circular economy."
-    },
-    {
-      no: "03",
-      title: "Challenging Perception",
-      desc: "Architecture as a form of research , cultural critique and humanity service to uplift communities , empower businesses and to create lasting value rather than a commercial service. We position our architecture office as a laboratory for ideas where we measure success not by profitability but by intellectual contribution and influence on architecture thinking."
-    }
-  ];
+  const { settings } = useSite();
+  const approach = settings.approach;
 
   return (
     <section id="approach" className="py-24 bg-white overflow-hidden">
@@ -28,10 +14,10 @@ export default function OurApproach() {
           {/* Sticky Header Section */}
           <div className="lg:col-span-4 lg:sticky lg:top-25 lg:-mt-2 text-center lg:text-left">
             <h2 className="text-3xl md:text-4xl font-outfit font-light tracking-tighter text-black leading-[0.9] mb-8">
-              Our Approach
+              {approach.title}
             </h2>
             <p className="text-gray-600 text-lg max-w-sm mx-auto lg:mx-0 leading-relaxed font-normal">
-              Our approach to design is experimental and sculptural. We begin with free hand sketches allowing forms to evolve intuitively and then refine them using technology.
+              {approach.description}
             </p>
             <div className="mt-12 hidden lg:block">
               <div className="w-[1px] h-32 bg-gradient-to-b from-black to-transparent mx-auto lg:mx-0 opacity-20" />
@@ -40,7 +26,7 @@ export default function OurApproach() {
 
           {/* Approach Cards Section */}
           <div className="lg:col-span-7 lg:col-start-6 space-y-6">
-            {steps.map((step, idx) => (
+            {approach.steps.map((step, idx) => (
               <div
                 key={idx}
                 className="group relative p-8 sm:p-10 md:p-14 bg-[#f9f9f9] hover:bg-[#f2f2f2] transition-all duration-500 ease-out rounded-[40px] overflow-hidden cursor-default"
