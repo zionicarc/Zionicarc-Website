@@ -21,7 +21,7 @@ export default function Projects() {
       });
     }, { threshold: 0.1 });
 
-    if (projectRef.current.length > 0) {
+    if (projectRef.current && projectRef.current[0]) {
       observer.observe(projectRef.current[0]); // Observe first item container or section
     }
     return () => observer.disconnect();

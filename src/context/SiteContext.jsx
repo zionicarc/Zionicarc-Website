@@ -2,10 +2,21 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const SiteContext = createContext();
 
+const deepMerge = (target, source) => {
+    for (const key in source) {
+        if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+            if (!target[key]) target[key] = {};
+            deepMerge(target[key], source[key]);
+        } else {
+            target[key] = source[key];
+        }
+    }
+    return target;
+};
+
 export const SiteProvider = ({ children }) => {
     const [settings, setSettings] = useState(() => {
-        const saved = localStorage.getItem('siteSettings');
-        return saved ? JSON.parse(saved) : {
+        const defaultSettings = {
             showProjects: true,
             hero: {
                 title: "Z'IONIC<br />ARC",
@@ -80,6 +91,18 @@ export const SiteProvider = ({ children }) => {
                 timings: "Call Timings: 9:00 AM – 5:00 PM"
             }
         };
+
+        const saved = localStorage.getItem('siteSettings');
+        if (!saved) return defaultSettings;
+
+        try {
+            const parsed = JSON.parse(saved);
+            // Deeply merge saved data into defaults to ensure new keys exist
+            return deepMerge({ ...defaultSettings }, parsed);
+        } catch (e) {
+            console.error("Error parsing site settings:", e);
+            return defaultSettings;
+        }
     });
 
     useEffect(() => {
@@ -87,7 +110,11 @@ export const SiteProvider = ({ children }) => {
     }, [settings]);
 
     const updateSettings = (newSettings) => {
-        setSettings(prev => ({ ...prev, ...newSettings }));
+        setSettings(prev => {
+            const updated = { ...prev };
+            deepMerge(updated, newSettings);
+            return updated;
+        });
     };
 
     return (
