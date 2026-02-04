@@ -518,10 +518,6 @@ export default function AdminDashboard() {
                                             <textarea className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black rows={2} font-outfit" value={localSettings.footer.tagline} onChange={(e) => updateField('footer', 'tagline', e.target.value)} />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Address / Location</label>
-                                            <input className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit" value={localSettings.footer.address} onChange={(e) => updateField('footer', 'address', e.target.value)} />
-                                        </div>
-                                        <div className="space-y-2">
                                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Operating / Call Timings</label>
                                             <input className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit" value={localSettings.footer.timings} onChange={(e) => updateField('footer', 'timings', e.target.value)} />
                                         </div>

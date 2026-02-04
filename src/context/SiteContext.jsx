@@ -87,7 +87,6 @@ export const SiteProvider = ({ children }) => {
             },
             footer: {
                 tagline: "Redefining contemporary architecture with a fusion of sculptural forms and human experience.",
-                address: "Z'IONIC ARC, Studio 2B, Skyline Towers",
                 timings: "Call Timings: 9:00 AM – 5:00 PM"
             }
         };
