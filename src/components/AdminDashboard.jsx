@@ -12,7 +12,7 @@ export default function AdminDashboard() {
     // Simple hardcoded password for demonstration
     const handleLogin = (e) => {
         e.preventDefault();
-        if (password === 'zionic123') {
+        if (password === 'Jobisam_30') {
             setIsAuthenticated(true);
         } else {
             alert('Incorrect Password');
