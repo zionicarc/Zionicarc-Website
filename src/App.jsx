@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
-import Expertise from "./components/OurServices";
+import Expertise from "./components/OurExpertise";
 import Footer from "./components/Footer";
 
 // Lazy load non-critical sections
