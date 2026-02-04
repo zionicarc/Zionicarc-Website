@@ -12,7 +12,7 @@ export default function Footer({ onOpenTerms, onOpenPrivacy }) {
     { label: "Our Approach", href: "#approach" },
     { label: "Our Services", href: "#detailed-services" },
     { label: "Why Choose Us", href: "#why-choose-us" },
-    // { label: "Our Work", href: "#projects" },
+    { label: "Our Work", href: "#projects" },
     { label: "Start a Project", href: "#contact" },
   ];
 

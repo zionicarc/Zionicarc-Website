@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 // Lazy load non-critical sections
 const OurApproach = lazy(() => import("./components/OurApproach"));
 const ServicesDetail = lazy(() => import("./components/ServicesDetail"));
+const Projects = lazy(() => import("./components/Projects"));
 const WhyChooseUs = lazy(() => import("./components/WhyChooseUs"));
 const Contact = lazy(() => import("./components/Contact"));
 const TermsOfService = lazy(() => import("./components/TermsOfService"));
@@ -36,6 +37,9 @@ const App = () => {
         </Suspense>
         <Suspense fallback={<SectionLoader />}>
           <ServicesDetail />
+        </Suspense>
+        <Suspense fallback={<SectionLoader />}>
+          <Projects />
         </Suspense>
         <Suspense fallback={<SectionLoader />}>
           <WhyChooseUs />

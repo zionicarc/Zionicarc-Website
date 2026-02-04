@@ -24,7 +24,30 @@ export default function Projects() {
   }, []);
 
   const projects = [
-    { name: "Aeon Tower", location: "Singapore", img: "https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=2670&auto=format&fit=crop", type: "Commercial" },
+    {
+      name: "Aeon Tower",
+      location: "Singapore",
+      img: "https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=2670&auto=format&fit=crop",
+      type: "Commercial"
+    },
+    {
+      name: "The Glass House",
+      location: "Switzerland",
+      img: "https://images.unsplash.com/photo-1449156059431-787c1be17d0b?q=80&w=2070&auto=format&fit=crop",
+      type: "Residential"
+    },
+    {
+      name: "Skyline Pavilion",
+      location: "Tokyo",
+      img: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=2070&auto=format&fit=crop",
+      type: "Public Design"
+    },
+    {
+      name: "Zenith Library",
+      location: "Copenhagen",
+      img: "https://images.unsplash.com/photo-1518005020250-6eb5f3f2d057?q=80&w=2086&auto=format&fit=crop",
+      type: "Institutional"
+    }
   ];
 
   return (

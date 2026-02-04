@@ -20,7 +20,7 @@ export default function Navbar() {
     { label: "Our Approach", href: "#approach" },
     { label: "Our Services", href: "#detailed-services" },
     { label: "Why Choose Us", href: "#why-choose-us" },
-    // { label: "Our Work", href: "#projects" },
+    { label: "Our Work", href: "#projects" },
     { label: "Contact", href: "#contact" },
   ];
 
