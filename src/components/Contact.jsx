@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mail, Phone, MessageCircle, ArrowUpRight } from 'lucide-react';
-import { handleEmailClick } from '../utils/emailUtils';
+import { handleEmailClick, handleWhatsAppClick } from '../utils/emailUtils';
 
 export default function Contact() {
   return (
@@ -32,6 +32,7 @@ export default function Contact() {
             {/* WhatsApp - Priority Action */}
             <a
               href="https://wa.me/919986598000"
+              onClick={(e) => handleWhatsAppClick(e, '919986598000')}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative flex items-center justify-between p-5 md:p-8 bg-[#25D366]/5 border border-[#25D366]/20 rounded-[2rem] md:rounded-[2.5rem] transition-all duration-300 hover:bg-[#25D366]/10"
@@ -69,6 +70,7 @@ export default function Contact() {
             {/* Phone Method */}
             <a
               href="tel:+919986598000"
+              onClick={(e) => handlePhoneClick(e, '+919986598000')}
               className="group relative flex items-center justify-between p-5 md:p-8 bg-gray-50 border border-black/5 rounded-[2rem] md:rounded-[2.5rem] transition-all duration-300 hover:bg-black hover:text-white"
             >
               <div className="flex items-center gap-4 md:gap-6 min-w-0">

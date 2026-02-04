@@ -64,14 +64,24 @@ export default function Footer({ onOpenTerms, onOpenPrivacy }) {
                 <span className="text-sm font-normal">zionicarc@gmail.com</span>
               </a>
 
-              <a href="tel:+919986598000" className="group flex items-center gap-4 text-gray-400 hover:text-white transition-colors">
+              <a
+                href="tel:+919986598000"
+                onClick={(e) => handlePhoneClick(e, '+919986598000')}
+                className="group flex items-center gap-4 text-gray-400 hover:text-white transition-colors"
+              >
                 <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white/5 group-hover:border-white/20 transition-all">
                   <Phone size={18} strokeWidth={1.5} />
                 </div>
                 <span className="text-sm font-normal">+91 9986598000</span>
               </a>
 
-              <a href="https://wa.me/919986598000" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-4 text-[#25D366] hover:text-[#25D366]/80 transition-colors">
+              <a
+                href="https://wa.me/919986598000"
+                onClick={(e) => handleWhatsAppClick(e, '919986598000')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-4 text-[#25D366] hover:text-[#25D366]/80 transition-colors"
+              >
                 <div className="w-10 h-10 rounded-full border border-[#25D366]/20 flex items-center justify-center bg-[#25D366]/5 group-hover:bg-[#25D366]/10 transition-all">
                   <MessageCircle size={18} strokeWidth={1.5} />
                 </div>

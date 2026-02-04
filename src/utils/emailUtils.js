@@ -13,3 +13,15 @@ export const handleEmailClick = (e, email = 'zionicarc@gmail.com') => {
         window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, '_blank');
     }
 };
+
+export const handlePhoneClick = (e, phone = '+919986598000') => {
+    // We don't necessarily preventDefault here to allow standard behavior as fallback,
+    // but explicitly setting location.href can solve some mobile webview issues.
+    window.location.href = `tel:${phone}`;
+};
+
+export const handleWhatsAppClick = (e, phone = '919986598000') => {
+    // Ensuring it opens in a new tab/app correctly
+    const url = `https://wa.me/${phone}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+};
