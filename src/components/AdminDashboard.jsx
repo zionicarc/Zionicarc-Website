@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSite } from '../context/SiteContext';
 import {
     Layout, Eye, EyeOff, Lock, Unlock, ArrowLeft,
-    Home, Info, Briefcase, Zap, Heart, Mail, Save
+    Home, Info, Briefcase, Zap, Heart, Mail, Save, Plus, Trash2
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -39,15 +39,40 @@ export default function AdminDashboard() {
     };
 
     const updateListItem = (section, arrayKey, index, field, value) => {
-        const newItems = [...localSettings[section][arrayKey]];
-        newItems[index] = { ...newItems[index], [field]: value };
+        setLocalSettings(prev => {
+            const newArray = [...prev[section][arrayKey]];
+            newArray[index] = { ...newArray[index], [field]: value };
+            return {
+                ...prev,
+                [section]: {
+                    ...prev[section],
+                    [arrayKey]: newArray
+                }
+            };
+        });
+    };
+
+    const addListItem = (section, arrayKey, defaultValue) => {
         setLocalSettings(prev => ({
             ...prev,
             [section]: {
                 ...prev[section],
-                [arrayKey]: newItems
+                [arrayKey]: [...prev[section][arrayKey], defaultValue]
             }
         }));
+    };
+
+    const removeListItem = (section, arrayKey, index) => {
+        setLocalSettings(prev => {
+            const newArray = prev[section][arrayKey].filter((_, i) => i !== index);
+            return {
+                ...prev,
+                [section]: {
+                    ...prev[section],
+                    [arrayKey]: newArray
+                }
+            };
+        });
     };
 
     if (!isAuthenticated) {
@@ -186,6 +211,16 @@ export default function AdminDashboard() {
                                                 onChange={(e) => updateField('hero', 'tagline', e.target.value)}
                                             />
                                         </div>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Primary Button Label</label>
+                                                <input className="w-full bg-black border border-white/5 rounded-xl px-4 py-4 text-white" value={localSettings.hero.primaryBtn} onChange={(e) => updateField('hero', 'primaryBtn', e.target.value)} />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Secondary Button Label</label>
+                                                <input className="w-full bg-black border border-white/5 rounded-xl px-4 py-4 text-white" value={localSettings.hero.secondaryBtn} onChange={(e) => updateField('hero', 'secondaryBtn', e.target.value)} />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -236,7 +271,12 @@ export default function AdminDashboard() {
                                             </div>
                                         </div>
                                         <div className="space-y-4">
-                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Expertise Bullets</label>
+                                            <div className="flex justify-between items-center">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Expertise Bullets</label>
+                                                <button onClick={() => addListItem('expertise', 'items', { desc: 'New Expertise', icon: 'Box' })} className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest bg-white/5 hover:bg-white text-gray-400 hover:text-black px-3 py-1 rounded-lg transition-all">
+                                                    <Plus size={10} /> Add Item
+                                                </button>
+                                            </div>
                                             {localSettings.expertise.items.map((item, idx) => (
                                                 <div key={idx} className="p-6 bg-black/40 border border-white/5 rounded-2xl flex gap-4">
                                                     <div className="flex-1 space-y-4">
@@ -246,9 +286,14 @@ export default function AdminDashboard() {
                                                             value={item.desc}
                                                             onChange={(e) => updateListItem('expertise', 'items', idx, 'desc', e.target.value)}
                                                         />
-                                                        <div className="flex items-center gap-4">
-                                                            <span className="text-[10px] text-gray-600 uppercase font-bold">Icon:</span>
-                                                            <input className="bg-transparent border-b border-white/10 text-xs py-1" value={item.icon} onChange={(e) => updateListItem('expertise', 'items', idx, 'icon', e.target.value)} />
+                                                        <div className="flex items-center justify-between">
+                                                            <div className="flex items-center gap-4">
+                                                                <span className="text-[10px] text-gray-600 uppercase font-bold">Icon:</span>
+                                                                <input className="bg-transparent border-b border-white/10 text-xs py-1" value={item.icon} onChange={(e) => updateListItem('expertise', 'items', idx, 'icon', e.target.value)} />
+                                                            </div>
+                                                            <button onClick={() => removeListItem('expertise', 'items', idx)} className="text-gray-600 hover:text-red-500 transition-colors">
+                                                                <Trash2 size={16} />
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -275,10 +320,19 @@ export default function AdminDashboard() {
                                                 <input className="w-full bg-black border border-white/5 rounded-xl px-4 py-4 text-white" value={localSettings.approach.description} onChange={(e) => updateField('approach', 'description', e.target.value)} />
                                             </div>
                                         </div>
+                                        <div className="flex justify-between items-center mb-4">
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Approach Steps</label>
+                                            <button onClick={() => addListItem('approach', 'steps', { no: '04', title: 'New Step', desc: 'Description' })} className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest bg-white/5 hover:bg-white text-gray-400 hover:text-black px-3 py-1 rounded-lg transition-all">
+                                                <Plus size={10} /> Add Step
+                                            </button>
+                                        </div>
                                         {localSettings.approach.steps.map((step, idx) => (
-                                            <div key={idx} className="p-6 bg-black/40 border border-white/5 rounded-2xl space-y-4">
+                                            <div key={idx} className="p-6 bg-black/40 border border-white/5 rounded-2xl space-y-4 relative group">
+                                                <button onClick={() => removeListItem('approach', 'steps', idx)} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-gray-600 hover:text-red-500 transition-all">
+                                                    <Trash2 size={16} />
+                                                </button>
                                                 <div className="flex items-center gap-4">
-                                                    <span className="w-8 h-8 rounded-lg bg-white text-black flex items-center justify-center font-bold text-xs">{step.no}</span>
+                                                    <input className="w-8 h-8 rounded-lg bg-white text-black flex items-center justify-center font-bold text-xs text-center" value={step.no} onChange={(e) => updateListItem('approach', 'steps', idx, 'no', e.target.value)} />
                                                     <input className="flex-1 bg-transparent text-xl font-bold border-b border-white/10" value={step.title} onChange={(e) => updateListItem('approach', 'steps', idx, 'title', e.target.value)} />
                                                 </div>
                                                 <textarea className="w-full bg-black/50 border border-white/5 rounded-lg px-4 py-3 text-sm text-gray-400" rows={3} value={step.desc} onChange={(e) => updateListItem('approach', 'steps', idx, 'desc', e.target.value)} />
@@ -305,9 +359,18 @@ export default function AdminDashboard() {
                                                 <input className="w-full bg-black border border-white/5 rounded-xl px-4 py-4 text-white" value={localSettings.services.caption} onChange={(e) => updateField('services', 'caption', e.target.value)} />
                                             </div>
                                         </div>
+                                        <div className="flex justify-between items-center mb-4">
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Service Items</label>
+                                            <button onClick={() => addListItem('services', 'items', { title: 'New Service', subtitle: 'Category', desc: 'Description' })} className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest bg-white/5 hover:bg-white text-gray-400 hover:text-black px-3 py-1 rounded-lg transition-all">
+                                                <Plus size={10} /> Add Service
+                                            </button>
+                                        </div>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             {localSettings.services.items.map((item, idx) => (
-                                                <div key={idx} className="p-6 bg-black/40 border border-white/5 rounded-2xl space-y-4">
+                                                <div key={idx} className="p-6 bg-black/40 border border-white/5 rounded-2xl space-y-4 relative group">
+                                                    <button onClick={() => removeListItem('services', 'items', idx)} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-gray-600 hover:text-red-500 transition-all">
+                                                        <Trash2 size={16} />
+                                                    </button>
                                                     <input className="w-full bg-transparent text-lg font-bold border-b border-white/10" value={item.title} onChange={(e) => updateListItem('services', 'items', idx, 'title', e.target.value)} />
                                                     <input className="w-full bg-transparent text-xs text-gray-400 uppercase tracking-widest" value={item.subtitle} onChange={(e) => updateListItem('services', 'items', idx, 'subtitle', e.target.value)} />
                                                     <textarea className="w-full bg-black/50 border border-white/5 rounded-lg px-4 py-3 text-sm text-gray-500" rows={3} value={item.desc} onChange={(e) => updateListItem('services', 'items', idx, 'desc', e.target.value)} />
@@ -333,6 +396,37 @@ export default function AdminDashboard() {
                                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Link Text (e.g. View All Projects)</label>
                                             <input className="w-full bg-black border border-white/5 rounded-xl px-4 py-4 text-white" value={localSettings.projects.description} onChange={(e) => updateField('projects', 'description', e.target.value)} />
                                         </div>
+
+                                        <div className="space-y-4 pt-6 mt-6 border-t border-white/5">
+                                            <div className="flex justify-between items-center">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Project List Items</label>
+                                                <button onClick={() => addListItem('projects', 'items', { name: 'New Project', location: 'Location', type: 'Design', img: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=2670&auto=format&fit=crop' })} className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest bg-white/5 hover:bg-white text-gray-400 hover:text-black px-3 py-1 rounded-lg transition-all">
+                                                    <Plus size={10} /> Add Project
+                                                </button>
+                                            </div>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                {localSettings.projects.items.map((item, idx) => (
+                                                    <div key={idx} className="p-6 bg-black/40 border border-white/5 rounded-2xl space-y-4 relative group">
+                                                        <button onClick={() => removeListItem('projects', 'items', idx)} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-gray-600 hover:text-red-500 transition-all">
+                                                            <Trash2 size={16} />
+                                                        </button>
+                                                        <div className="flex gap-4">
+                                                            <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 border border-white/10 bg-black">
+                                                                <img src={item.img} alt="" className="w-full h-full object-cover opacity-50" />
+                                                            </div>
+                                                            <div className="flex-1 space-y-3">
+                                                                <input className="w-full bg-transparent text-sm font-bold border-b border-white/10" placeholder="Name" value={item.name} onChange={(e) => updateListItem('projects', 'items', idx, 'name', e.target.value)} />
+                                                                <input className="w-full bg-transparent text-xs text-gray-400 border-b border-white/10" placeholder="Location" value={item.location} onChange={(e) => updateListItem('projects', 'items', idx, 'location', e.target.value)} />
+                                                                <div className="grid grid-cols-2 gap-2 mt-2">
+                                                                    <input className="w-full bg-transparent text-[10px] text-gray-500 uppercase tracking-widest border-b border-white/10" placeholder="Type" value={item.type} onChange={(e) => updateListItem('projects', 'items', idx, 'type', e.target.value)} />
+                                                                    <input className="w-full bg-transparent text-[10px] text-gray-500 border-b border-white/10" placeholder="Img URL" value={item.img} onChange={(e) => updateListItem('projects', 'items', idx, 'img', e.target.value)} />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -354,16 +448,27 @@ export default function AdminDashboard() {
                                                 <input className="w-full bg-black border border-white/5 rounded-xl px-4 py-4 text-white" value={localSettings.whyChooseUs.description} onChange={(e) => updateField('whyChooseUs', 'description', e.target.value)} />
                                             </div>
                                         </div>
-                                        {localSettings.whyChooseUs.reasons.map((item, idx) => (
-                                            <div key={idx} className="p-6 bg-black/40 border border-white/5 rounded-2xl space-y-4">
-                                                <input className="w-full bg-transparent text-xl font-bold border-b border-white/10" value={item.title} onChange={(e) => updateListItem('whyChooseUs', 'reasons', idx, 'title', e.target.value)} />
-                                                <textarea className="w-full bg-black/50 border border-white/5 rounded-lg px-4 py-3 text-sm text-gray-400" rows={3} value={item.desc} onChange={(e) => updateListItem('whyChooseUs', 'reasons', idx, 'desc', e.target.value)} />
-                                                <div className="flex items-center gap-4">
-                                                    <span className="text-[10px] text-gray-600 uppercase font-bold">Icon:</span>
-                                                    <input className="bg-transparent border-b border-white/10 text-xs py-1" value={item.icon} onChange={(e) => updateListItem('whyChooseUs', 'reasons', idx, 'icon', e.target.value)} />
+                                        <div className="flex justify-between items-center mb-4">
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Value Proposition Items</label>
+                                            <button onClick={() => addListItem('whyChooseUs', 'reasons', { title: 'New Reason', desc: 'Description', icon: 'Award' })} className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest bg-white/5 hover:bg-white text-gray-400 hover:text-black px-3 py-1 rounded-lg transition-all">
+                                                <Plus size={10} /> Add Reason
+                                            </button>
+                                        </div>
+                                        <div className="grid grid-cols-1 gap-4">
+                                            {localSettings.whyChooseUs.reasons.map((item, idx) => (
+                                                <div key={idx} className="p-6 bg-black/40 border border-white/5 rounded-2xl space-y-4 relative group">
+                                                    <button onClick={() => removeListItem('whyChooseUs', 'reasons', idx)} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-gray-600 hover:text-red-500 transition-all">
+                                                        <Trash2 size={16} />
+                                                    </button>
+                                                    <input className="w-full bg-transparent text-xl font-bold border-b border-white/10" value={item.title} onChange={(e) => updateListItem('whyChooseUs', 'reasons', idx, 'title', e.target.value)} />
+                                                    <textarea className="w-full bg-black/50 border border-white/5 rounded-lg px-4 py-3 text-sm text-gray-400" rows={2} value={item.desc} onChange={(e) => updateListItem('whyChooseUs', 'reasons', idx, 'desc', e.target.value)} />
+                                                    <div className="flex items-center gap-4">
+                                                        <span className="text-[10px] text-gray-600 uppercase font-bold">Icon:</span>
+                                                        <input className="bg-transparent border-b border-white/10 text-xs py-1" value={item.icon} onChange={(e) => updateListItem('whyChooseUs', 'reasons', idx, 'icon', e.target.value)} />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))}
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -382,6 +487,20 @@ export default function AdminDashboard() {
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Brief Text</label>
                                             <textarea className="w-full bg-black border border-white/5 rounded-xl px-4 py-4 text-white rows={3}" value={localSettings.contact.description} onChange={(e) => updateField('contact', 'description', e.target.value)} />
+                                        </div>
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-outfit">
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Email Address</label>
+                                                <input className="w-full bg-black border border-white/5 rounded-xl px-4 py-4 text-white" value={localSettings.contact.email} onChange={(e) => updateField('contact', 'email', e.target.value)} />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500">Phone Number</label>
+                                                <input className="w-full bg-black border border-white/5 rounded-xl px-4 py-4 text-white" value={localSettings.contact.phone} onChange={(e) => updateField('contact', 'phone', e.target.value)} />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-500">WhatsApp (digits only)</label>
+                                                <input className="w-full bg-black border border-white/5 rounded-xl px-4 py-4 text-white" placeholder="919986598000" value={localSettings.contact.whatsapp} onChange={(e) => updateField('contact', 'whatsapp', e.target.value)} />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -33,8 +33,8 @@ export default function Contact() {
 
             {/* WhatsApp - Priority Action */}
             <a
-              href="https://wa.me/919986598000"
-              onClick={(e) => handleWhatsAppClick(e, '919986598000')}
+              href={`https://wa.me/${data.whatsapp}`}
+              onClick={(e) => handleWhatsAppClick(e, data.whatsapp)}
               target="_blank"
               rel="noopener noreferrer"
               className="group relative flex items-center justify-between p-5 md:p-8 bg-[#25D366]/5 border border-[#25D366]/20 rounded-[2rem] md:rounded-[2.5rem] transition-all duration-300 hover:bg-[#25D366]/10"
@@ -45,7 +45,7 @@ export default function Contact() {
                 </div>
                 <div className="min-w-0">
                   <span className="block text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-[#128C7E] mb-0.5 md:mb-1">WhatsApp</span>
-                  <span className="text-base md:text-2xl font-normal text-black block truncate md:overflow-visible tracking-tight">+91 9986598000</span>
+                  <span className="text-base md:text-2xl font-normal text-black block truncate md:overflow-visible tracking-tight">+{data.phone}</span>
                 </div>
               </div>
               <ArrowUpRight className="text-[#25D366] opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 shrink-0 hidden sm:block" size={24} />
@@ -53,7 +53,7 @@ export default function Contact() {
 
             {/* Email Method */}
             <a
-              href="mailto:zionicarc@gmail.com"
+              href={`mailto:${data.email}`}
               onClick={handleEmailClick}
               className="group relative flex items-center justify-between p-5 md:p-8 bg-gray-50 border border-black/5 rounded-[2rem] md:rounded-[2.5rem] transition-all duration-300 hover:bg-black hover:text-white"
             >
@@ -63,7 +63,7 @@ export default function Contact() {
                 </div>
                 <div className="min-w-0">
                   <span className="block text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 group-hover:text-white/50 mb-0.5 md:mb-1">Email Address</span>
-                  <span className="text-base md:text-2xl font-normal block truncate md:overflow-visible tracking-tight">zionicarc@gmail.com</span>
+                  <span className="text-base md:text-2xl font-normal block truncate md:overflow-visible tracking-tight">{data.email}</span>
                 </div>
               </div>
               <ArrowUpRight className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 shrink-0 hidden sm:block" size={24} />
@@ -71,8 +71,8 @@ export default function Contact() {
 
             {/* Phone Method */}
             <a
-              href="tel:+919986598000"
-              onClick={(e) => handlePhoneClick(e, '+919986598000')}
+              href={`tel:${data.phone.replace(/\s+/g, '')}`}
+              onClick={(e) => handlePhoneClick(e, data.phone.replace(/\s+/g, ''))}
               className="group relative flex items-center justify-between p-5 md:p-8 bg-gray-50 border border-black/5 rounded-[2rem] md:rounded-[2.5rem] transition-all duration-300 hover:bg-black hover:text-white"
             >
               <div className="flex items-center gap-4 md:gap-6 min-w-0">
@@ -81,7 +81,7 @@ export default function Contact() {
                 </div>
                 <div className="min-w-0">
                   <span className="block text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 group-hover:text-white/50 mb-0.5 md:mb-1">Phone Line</span>
-                  <span className="text-base md:text-2xl font-normal block truncate md:overflow-visible tracking-tight">+91 9986598000</span>
+                  <span className="text-base md:text-2xl font-normal block truncate md:overflow-visible tracking-tight">{data.phone}</span>
                 </div>
               </div>
               <ArrowUpRight className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 shrink-0 hidden sm:block" size={24} />

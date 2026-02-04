@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ArrowDown } from 'lucide-react';
-
+import Squares from './Squares';
 import { useSite } from '../context/SiteContext';
 
 export default function Hero() {
@@ -84,36 +84,28 @@ export default function Hero() {
           </p>
 
           {/* Buttons */}
-          <div className="flex flex-col sm:flex-row justify-center gap-6 sm:gap-8 mt-12">
-            <a
-              href="#detailed-services"
-              className="group flex items-center justify-center gap-3 text-sm md:text-base font-medium uppercase tracking-[0.2em] text-gray-800 hover:text-black transition-colors duration-300"
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-6">
+            <button
+              onClick={() => {
+                const contactSection = document.getElementById('contact');
+                contactSection?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="group relative px-10 py-5 bg-white text-black rounded-full font-bold text-sm uppercase tracking-widest overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-2xl"
             >
-              Our Services
-              <svg
-                className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+              <span className="relative z-10">{settings.hero.primaryBtn}</span>
+              <div className="absolute inset-0 bg-neutral-100 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+            </button>
+            {settings.showProjects && (
+              <button
+                onClick={() => {
+                  const projectsSection = document.getElementById('projects');
+                  projectsSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="group px-10 py-5 bg-transparent text-white border border-white/20 rounded-full font-bold text-sm uppercase tracking-widest transition-all hover:bg-white hover:text-black hover:border-white shadow-xl"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
-
-            <a
-              href="#contact"
-              className="group flex items-center justify-center gap-3 text-sm md:text-base font-medium uppercase tracking-[0.2em] text-gray-800 hover:text-black transition-colors duration-300"
-            >
-              Contact Us
-              <svg
-                className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
+                {settings.hero.secondaryBtn}
+              </button>
+            )}
           </div>
         </div>
       </div>

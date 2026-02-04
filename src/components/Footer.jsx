@@ -56,30 +56,30 @@ export default function Footer({ onOpenTerms, onOpenPrivacy }) {
 
             <div className="space-y-6">
               <a
-                href="mailto:zionicarc@gmail.com"
+                href={`mailto:${settings.contact.email}`}
                 onClick={handleEmailClick}
                 className="group flex items-center gap-4 text-gray-400 hover:text-white transition-colors"
               >
                 <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white/5 group-hover:border-white/20 transition-all">
                   <Mail size={18} strokeWidth={1.5} />
                 </div>
-                <span className="text-sm font-normal">zionicarc@gmail.com</span>
+                <span className="text-sm font-normal">{settings.contact.email}</span>
               </a>
 
               <a
-                href="tel:+919986598000"
-                onClick={(e) => handlePhoneClick(e, '+919986598000')}
+                href={`tel:${settings.contact.phone.replace(/\s+/g, '')}`}
+                onClick={(e) => handlePhoneClick(e, settings.contact.phone.replace(/\s+/g, ''))}
                 className="group flex items-center gap-4 text-gray-400 hover:text-white transition-colors"
               >
                 <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white/5 group-hover:border-white/20 transition-all">
                   <Phone size={18} strokeWidth={1.5} />
                 </div>
-                <span className="text-sm font-normal">+91 9986598000</span>
+                <span className="text-sm font-normal">{settings.contact.phone}</span>
               </a>
 
               <a
-                href="https://wa.me/919986598000"
-                onClick={(e) => handleWhatsAppClick(e, '919986598000')}
+                href={`https://wa.me/${settings.contact.whatsapp}`}
+                onClick={(e) => handleWhatsAppClick(e, settings.contact.whatsapp)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group flex items-center gap-4 text-[#25D366] hover:text-[#25D366]/80 transition-colors"

@@ -56,7 +56,7 @@ export default function Navbar() {
               href="#contact"
               className="bg-black text-white px-6 py-2.5 rounded-full font-outfit text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-black/80 transition-all active:scale-95"
             >
-              Start a Project
+              {settings.hero.primaryBtn}
             </a>
           </div>
 
