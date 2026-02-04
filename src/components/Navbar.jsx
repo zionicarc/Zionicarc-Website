@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { useSite } from "../context/SiteContext";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { settings } = useSite();
 
   // Toggle body scroll lock
   useEffect(() => {
@@ -22,7 +24,7 @@ export default function Navbar() {
     { label: "Why Choose Us", href: "#why-choose-us" },
     { label: "Our Work", href: "#projects" },
     { label: "Contact", href: "#contact" },
-  ];
+  ].filter(link => link.label !== "Our Work" || settings.showProjects);
 
   return (
     <header className="fixed top-0 left-0 w-full z-50">

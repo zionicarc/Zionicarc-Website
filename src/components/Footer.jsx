@@ -1,9 +1,11 @@
 import React from 'react';
 import { Mail, Phone, MessageCircle } from 'lucide-react';
 import { handleEmailClick } from '../utils/emailUtils';
+import { useSite } from '../context/SiteContext';
 
 export default function Footer({ onOpenTerms, onOpenPrivacy }) {
   const currentYear = new Date().getFullYear();
+  const { settings } = useSite();
 
   const links = [
     { label: "Home", href: "#" },
@@ -14,7 +16,7 @@ export default function Footer({ onOpenTerms, onOpenPrivacy }) {
     { label: "Why Choose Us", href: "#why-choose-us" },
     { label: "Our Work", href: "#projects" },
     { label: "Start a Project", href: "#contact" },
-  ];
+  ].filter(link => link.label !== "Our Work" || settings.showProjects);
 
   return (
     <footer className="bg-black text-white py-10 md:py-20 border-t border-white/5">

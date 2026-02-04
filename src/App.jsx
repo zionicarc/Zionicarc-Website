@@ -1,4 +1,6 @@
 import React, { Suspense, lazy } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { SiteProvider, useSite } from "./context/SiteContext";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -13,6 +15,7 @@ const WhyChooseUs = lazy(() => import("./components/WhyChooseUs"));
 const Contact = lazy(() => import("./components/Contact"));
 const TermsOfService = lazy(() => import("./components/TermsOfService"));
 const PrivacyPolicy = lazy(() => import("./components/PrivacyPolicy"));
+const AdminDashboard = lazy(() => import("./components/AdminDashboard"));
 
 // Simple lightweight loading component
 const SectionLoader = () => (
@@ -21,9 +24,10 @@ const SectionLoader = () => (
   </div>
 );
 
-const App = () => {
+const MainSite = () => {
   const [isTermsOpen, setIsTermsOpen] = React.useState(false);
   const [isPrivacyOpen, setIsPrivacyOpen] = React.useState(false);
+  const { settings } = useSite();
 
   return (
     <>
@@ -38,9 +42,14 @@ const App = () => {
         <Suspense fallback={<SectionLoader />}>
           <ServicesDetail />
         </Suspense>
-        <Suspense fallback={<SectionLoader />}>
-          <Projects />
-        </Suspense>
+
+        {/* Managed by Admin Toggle */}
+        {settings.showProjects && (
+          <Suspense fallback={<SectionLoader />}>
+            <Projects />
+          </Suspense>
+        )}
+
         <Suspense fallback={<SectionLoader />}>
           <WhyChooseUs />
         </Suspense>
@@ -58,6 +67,23 @@ const App = () => {
         {isPrivacyOpen && <PrivacyPolicy isOpen={isPrivacyOpen} onClose={() => setIsPrivacyOpen(false)} />}
       </Suspense>
     </>
+  );
+};
+
+const App = () => {
+  return (
+    <Router>
+      <SiteProvider>
+        <Routes>
+          <Route path="/" element={<MainSite />} />
+          <Route path="/admin" element={
+            <Suspense fallback={<div className="h-screen bg-black" />}>
+              <AdminDashboard />
+            </Suspense>
+          } />
+        </Routes>
+      </SiteProvider>
+    </Router>
   );
 };
 
