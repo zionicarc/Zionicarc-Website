@@ -3,7 +3,7 @@ import { storage } from '../lib/firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { Upload, X, CheckCircle, Loader2 } from 'lucide-react';
 
-export default function ImageUpload({ onUploadComplete, currentImage }) {
+export default function ImageUpload({ onUploadComplete, currentImage, acceptedFiles = "image/*" }) {
     const [uploading, setUploading] = useState(false);
     const [progress, setProgress] = useState(0);
 
@@ -59,7 +59,7 @@ export default function ImageUpload({ onUploadComplete, currentImage }) {
                             <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Upload Image</span>
                         </div>
                     )}
-                    <input type="file" className="hidden" onChange={handleUpload} disabled={uploading} accept="image/*" />
+                    <input type="file" className="hidden" onChange={handleUpload} disabled={uploading} accept={acceptedFiles} />
                 </label>
             </div>
         </div>

@@ -70,19 +70,7 @@ const TermsOfService = ({ isOpen, onClose }) => {
                         </div>
                     ))}
 
-                    <div className="space-y-6 pt-6 border-t border-white/5">
-                        <h3 className="text-sm font-bold uppercase tracking-widest text-white border-l-2 border-white/20 pl-4">9. Contact Information</h3>
-                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
-                            <p className="text-gray-400 text-sm font-normal">For questions about these Terms, contact:</p>
-                            <a
-                                href="mailto:zionicarc@gmail.com"
-                                onClick={handleEmailClick}
-                                className="text-white hover:text-gray-300 transition-colors mt-2 block font-medium"
-                            >
-                                zionicarc@gmail.com
-                            </a>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

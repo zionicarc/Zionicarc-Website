@@ -16,6 +16,7 @@ export default function AdminDashboard() {
     const [user, setUser] = useState(null);
     const [authLoading, setAuthLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('general');
+    const [activeLegalTab, setActiveLegalTab] = useState('privacy');
     const [localSettings, setLocalSettings] = useState(settings);
     const [isSaving, setIsSaving] = useState(false);
     const navigate = useNavigate();
@@ -368,7 +369,7 @@ export default function AdminDashboard() {
                                                 </button>
                                             </div>
                                             {localSettings.expertise.items.map((item, idx) => (
-                                                <div key={idx} className="p-6 bg-white border border-black/5 rounded-2xl flex gap-4 shadow-sm">
+                                                <div key={idx} className="p-6 bg-white border border-black/5 rounded-2xl flex gap-4 shadow-sm relative group">
                                                     <div className="flex-1 space-y-4">
                                                         <textarea
                                                             rows={2}
@@ -381,7 +382,7 @@ export default function AdminDashboard() {
                                                                 <span className="text-[10px] text-gray-400 uppercase font-bold">Icon:</span>
                                                                 <input className="bg-transparent border-b border-black/10 text-xs py-1 text-black font-outfit" value={item.icon} onChange={(e) => updateListItem('expertise', 'items', idx, 'icon', e.target.value)} />
                                                             </div>
-                                                            <button onClick={() => removeListItem('expertise', 'items', idx)} className="text-gray-300 hover:text-red-500 transition-colors">
+                                                            <button onClick={() => window.confirm('Are you sure you want to delete this item?') && removeListItem('expertise', 'items', idx)} className="absolute top-4 right-4 w-auto p-0 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
                                                                 <Trash2 size={16} />
                                                             </button>
                                                         </div>
@@ -418,7 +419,7 @@ export default function AdminDashboard() {
                                         </div>
                                         {localSettings.approach.steps.map((step, idx) => (
                                             <div key={idx} className="p-6 bg-white border border-black/5 rounded-2xl space-y-4 relative group shadow-sm">
-                                                <button onClick={() => removeListItem('approach', 'steps', idx)} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
+                                                <button onClick={() => window.confirm('Are you sure you want to delete this step?') && removeListItem('approach', 'steps', idx)} className="absolute top-4 right-4 w-auto p-0 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
                                                     <Trash2 size={16} />
                                                 </button>
                                                 <div className="flex items-center gap-4">
@@ -458,7 +459,7 @@ export default function AdminDashboard() {
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             {localSettings.services.items.map((item, idx) => (
                                                 <div key={idx} className="p-6 bg-white border border-black/5 rounded-2xl space-y-4 relative group shadow-sm">
-                                                    <button onClick={() => removeListItem('services', 'items', idx)} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
+                                                    <button onClick={() => window.confirm('Are you sure you want to delete this service?') && removeListItem('services', 'items', idx)} className="absolute top-4 right-4 w-auto p-0 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
                                                         <Trash2 size={16} />
                                                     </button>
                                                     <input className="w-full bg-transparent text-lg font-bold border-b border-black/10 text-black font-outfit" value={item.title} onChange={(e) => updateListItem('services', 'items', idx, 'title', e.target.value)} />
@@ -522,7 +523,7 @@ export default function AdminDashboard() {
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                                 {localSettings.projects.items.map((item, idx) => (
                                                     <div key={idx} className="p-6 bg-white border border-black/5 rounded-2xl space-y-4 relative group shadow-sm">
-                                                        <button onClick={() => removeListItem('projects', 'items', idx)} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
+                                                        <button onClick={() => window.confirm('Are you sure you want to delete this project?') && removeListItem('projects', 'items', idx)} className="absolute top-4 right-4 w-auto p-0 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
                                                             <Trash2 size={16} />
                                                         </button>
                                                         <div className="flex gap-4">
@@ -539,6 +540,7 @@ export default function AdminDashboard() {
                                                                     <ImageUpload
                                                                         currentImage={item.img}
                                                                         onUploadComplete={(url) => updateListItem('projects', 'items', idx, 'img', url)}
+                                                                        acceptedFiles="image/png, image/jpeg, image/jpg"
                                                                     />
                                                                 </div>
                                                             </div>
@@ -577,7 +579,7 @@ export default function AdminDashboard() {
                                         <div className="grid grid-cols-1 gap-4">
                                             {localSettings.whyChooseUs.reasons.map((item, idx) => (
                                                 <div key={idx} className="p-6 bg-white border border-black/5 rounded-2xl space-y-4 relative group shadow-sm">
-                                                    <button onClick={() => removeListItem('whyChooseUs', 'reasons', idx)} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
+                                                    <button onClick={() => window.confirm('Are you sure you want to delete this reason?') && removeListItem('whyChooseUs', 'reasons', idx)} className="absolute top-4 right-4 w-auto p-0 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
                                                         <Trash2 size={16} />
                                                     </button>
                                                     <input className="w-full bg-transparent text-xl font-bold border-b border-black/10 text-black font-outfit" value={item.title} onChange={(e) => updateListItem('whyChooseUs', 'reasons', idx, 'title', e.target.value)} />
@@ -680,117 +682,137 @@ export default function AdminDashboard() {
                                         <p className="text-gray-500 text-sm">Manage Privacy Policy and Terms of Service.</p>
                                     </header>
 
-                                    {/* Privacy Policy */}
-                                    <div className="space-y-6">
-                                        <div className="flex items-center justify-between pb-4 border-b border-black/5">
-                                            <h4 className="text-lg font-bold uppercase tracking-widest">Privacy Policy</h4>
-                                            <button onClick={() => addListItem('privacyPolicy', 'sections', { title: 'New Section', content: 'Section content...' })} className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest bg-black/5 hover:bg-black text-gray-500 hover:text-white px-3 py-1 rounded-lg transition-all">
-                                                <Plus size={10} /> Add Section
-                                            </button>
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Last Updated Text</label>
-                                            <input
-                                                className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit"
-                                                value={localSettings.privacyPolicy?.lastUpdated || ''}
-                                                onChange={(e) => setLocalSettings(prev => ({ ...prev, privacyPolicy: { ...prev.privacyPolicy, lastUpdated: e.target.value } }))}
-                                            />
-                                        </div>
-
-                                        <div className="space-y-4">
-                                            {localSettings.privacyPolicy?.sections?.map((section, idx) => (
-                                                <div key={idx} className="p-6 bg-white border border-black/5 rounded-2xl space-y-4 relative group shadow-sm">
-                                                    <button onClick={() => removeListItem('privacyPolicy', 'sections', idx)} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
-                                                        <Trash2 size={16} />
-                                                    </button>
-
-                                                    <div className="space-y-2">
-                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Section Title</label>
-                                                        <input className="w-full bg-transparent text-sm font-bold border-b border-black/10 text-black font-outfit py-2" value={section.title} onChange={(e) => updateListItem('privacyPolicy', 'sections', idx, 'title', e.target.value)} />
-                                                    </div>
-
-                                                    <div className="space-y-2">
-                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Content</label>
-                                                        <textarea className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit leading-relaxed" rows={3} value={section.content} onChange={(e) => updateListItem('privacyPolicy', 'sections', idx, 'content', e.target.value)} />
-                                                    </div>
-
-                                                    {/* Simple List Items Management */}
-                                                    <div className="space-y-2">
-                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">List Items (One per line)</label>
-                                                        <textarea
-                                                            className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit"
-                                                            rows={3}
-                                                            placeholder="Item 1&#10;Item 2&#10;Item 3"
-                                                            value={section.listItems ? section.listItems.join('\n') : ''}
-                                                            onChange={(e) => {
-                                                                const items = e.target.value.split('\n').filter(i => i.trim() !== '');
-                                                                updateListItem('privacyPolicy', 'sections', idx, 'listItems', items);
-                                                            }}
-                                                        />
-                                                    </div>
-
-                                                    <div className="space-y-2">
-                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Secondary Content (After List)</label>
-                                                        <textarea className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit leading-relaxed" rows={2} value={section.secondaryContent || ''} onChange={(e) => updateListItem('privacyPolicy', 'sections', idx, 'secondaryContent', e.target.value)} />
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
+                                    {/* Sub-Tabs */}
+                                    <div className="flex gap-8 border-b border-black/5">
+                                        <button
+                                            onClick={() => setActiveLegalTab('privacy')}
+                                            className={`pb-4 text-xs font-bold uppercase tracking-widest transition-all ${activeLegalTab === 'privacy' ? 'text-black border-b-2 border-black' : 'text-gray-400 hover:text-gray-600'}`}
+                                        >
+                                            Privacy Policy
+                                        </button>
+                                        <button
+                                            onClick={() => setActiveLegalTab('terms')}
+                                            className={`pb-4 text-xs font-bold uppercase tracking-widest transition-all ${activeLegalTab === 'terms' ? 'text-black border-b-2 border-black' : 'text-gray-400 hover:text-gray-600'}`}
+                                        >
+                                            Terms of Service
+                                        </button>
                                     </div>
+
+                                    {/* Privacy Policy */}
+                                    {activeLegalTab === 'privacy' && (
+                                        <div className="space-y-6 animate-fadeIn">
+                                            <div className="flex items-center justify-between pb-4 border-b border-black/5">
+                                                <h4 className="text-lg font-bold uppercase tracking-widest">Privacy Policy Content</h4>
+                                                <button onClick={() => addListItem('privacyPolicy', 'sections', { title: 'New Section', content: 'Section content...' })} className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest bg-black/5 hover:bg-black text-gray-500 hover:text-white px-3 py-1 rounded-lg transition-all">
+                                                    <Plus size={10} /> Add Section
+                                                </button>
+                                            </div>
+
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Last Updated Text</label>
+                                                <input
+                                                    className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit"
+                                                    value={localSettings.privacyPolicy?.lastUpdated || ''}
+                                                    onChange={(e) => setLocalSettings(prev => ({ ...prev, privacyPolicy: { ...prev.privacyPolicy, lastUpdated: e.target.value } }))}
+                                                />
+                                            </div>
+
+                                            <div className="space-y-4">
+                                                {localSettings.privacyPolicy?.sections?.map((section, idx) => (
+                                                    <div key={idx} className="p-6 bg-white border border-black/5 rounded-2xl space-y-4 relative group shadow-sm">
+                                                        <button onClick={() => window.confirm('Are you sure you want to delete this section?') && removeListItem('privacyPolicy', 'sections', idx)} className="absolute top-4 right-4 w-auto p-0 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
+                                                            <Trash2 size={16} />
+                                                        </button>
+
+                                                        <div className="space-y-2">
+                                                            <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Section Title</label>
+                                                            <input className="w-full bg-transparent text-sm font-bold border-b border-black/10 text-black font-outfit py-2" value={section.title} onChange={(e) => updateListItem('privacyPolicy', 'sections', idx, 'title', e.target.value)} />
+                                                        </div>
+
+                                                        <div className="space-y-2">
+                                                            <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Content</label>
+                                                            <textarea className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit leading-relaxed" rows={3} value={section.content} onChange={(e) => updateListItem('privacyPolicy', 'sections', idx, 'content', e.target.value)} />
+                                                        </div>
+
+                                                        {/* Simple List Items Management */}
+                                                        <div className="space-y-2">
+                                                            <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">List Items (One per line)</label>
+                                                            <textarea
+                                                                className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit"
+                                                                rows={3}
+                                                                placeholder="Item 1&#10;Item 2&#10;Item 3"
+                                                                value={section.listItems ? section.listItems.join('\n') : ''}
+                                                                onChange={(e) => {
+                                                                    const items = e.target.value.split('\n').filter(i => i.trim() !== '');
+                                                                    updateListItem('privacyPolicy', 'sections', idx, 'listItems', items);
+                                                                }}
+                                                            />
+                                                        </div>
+
+                                                        <div className="space-y-2">
+                                                            <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Secondary Content (After List)</label>
+                                                            <textarea className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit leading-relaxed" rows={2} value={section.secondaryContent || ''} onChange={(e) => updateListItem('privacyPolicy', 'sections', idx, 'secondaryContent', e.target.value)} />
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
 
                                     {/* Terms of Service */}
-                                    <div className="space-y-6 pt-12 border-t border-gray-100">
-                                        <div className="flex items-center justify-between pb-4 border-b border-black/5">
-                                            <h4 className="text-lg font-bold uppercase tracking-widest">Terms of Service</h4>
-                                            <button onClick={() => addListItem('termsOfService', 'sections', { title: 'New Section', content: 'Section content...' })} className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest bg-black/5 hover:bg-black text-gray-500 hover:text-white px-3 py-1 rounded-lg transition-all">
-                                                <Plus size={10} /> Add Section
-                                            </button>
-                                        </div>
+                                    {activeLegalTab === 'terms' && (
+                                        <div className="space-y-6 animate-fadeIn">
+                                            <div className="flex items-center justify-between pb-4 border-b border-black/5">
+                                                <h4 className="text-lg font-bold uppercase tracking-widest">Terms of Service Content</h4>
+                                                <button onClick={() => addListItem('termsOfService', 'sections', { title: 'New Section', content: 'Section content...' })} className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest bg-black/5 hover:bg-black text-gray-500 hover:text-white px-3 py-1 rounded-lg transition-all">
+                                                    <Plus size={10} /> Add Section
+                                                </button>
+                                            </div>
 
-                                        <div className="space-y-2">
-                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Last Updated Text</label>
-                                            <input
-                                                className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit"
-                                                value={localSettings.termsOfService?.lastUpdated || ''}
-                                                onChange={(e) => setLocalSettings(prev => ({ ...prev, termsOfService: { ...prev.termsOfService, lastUpdated: e.target.value } }))}
-                                            />
-                                        </div>
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Last Updated Text</label>
+                                                <input
+                                                    className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit"
+                                                    value={localSettings.termsOfService?.lastUpdated || ''}
+                                                    onChange={(e) => setLocalSettings(prev => ({ ...prev, termsOfService: { ...prev.termsOfService, lastUpdated: e.target.value } }))}
+                                                />
+                                            </div>
 
-                                        <div className="space-y-4">
-                                            {localSettings.termsOfService?.sections?.map((section, idx) => (
-                                                <div key={idx} className="p-6 bg-white border border-black/5 rounded-2xl space-y-4 relative group shadow-sm">
-                                                    <button onClick={() => removeListItem('termsOfService', 'sections', idx)} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
-                                                        <Trash2 size={16} />
-                                                    </button>
+                                            <div className="space-y-4">
+                                                {localSettings.termsOfService?.sections?.map((section, idx) => (
+                                                    <div key={idx} className="p-6 bg-white border border-black/5 rounded-2xl space-y-4 relative group shadow-sm">
+                                                        <button onClick={() => window.confirm('Are you sure you want to delete this section?') && removeListItem('termsOfService', 'sections', idx)} className="absolute top-4 right-4 w-auto p-0 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
+                                                            <Trash2 size={16} />
+                                                        </button>
 
-                                                    <div className="space-y-2">
-                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Section Title</label>
-                                                        <input className="w-full bg-transparent text-sm font-bold border-b border-black/10 text-black font-outfit py-2" value={section.title} onChange={(e) => updateListItem('termsOfService', 'sections', idx, 'title', e.target.value)} />
+                                                        <div className="space-y-2">
+                                                            <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Section Title</label>
+                                                            <input className="w-full bg-transparent text-sm font-bold border-b border-black/10 text-black font-outfit py-2" value={section.title} onChange={(e) => updateListItem('termsOfService', 'sections', idx, 'title', e.target.value)} />
+                                                        </div>
+
+                                                        <div className="space-y-2">
+                                                            <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Content</label>
+                                                            <textarea className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit leading-relaxed" rows={3} value={section.content} onChange={(e) => updateListItem('termsOfService', 'sections', idx, 'content', e.target.value)} />
+                                                        </div>
+
+                                                        <div className="space-y-2">
+                                                            <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">List Items (One per line)</label>
+                                                            <textarea
+                                                                className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit"
+                                                                rows={3}
+                                                                placeholder="Item 1&#10;Item 2"
+                                                                value={section.listItems ? section.listItems.join('\n') : ''}
+                                                                onChange={(e) => {
+                                                                    const items = e.target.value.split('\n').filter(i => i.trim() !== '');
+                                                                    updateListItem('termsOfService', 'sections', idx, 'listItems', items);
+                                                                }}
+                                                            />
+                                                        </div>
                                                     </div>
-
-                                                    <div className="space-y-2">
-                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Content</label>
-                                                        <textarea className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit leading-relaxed" rows={3} value={section.content} onChange={(e) => updateListItem('termsOfService', 'sections', idx, 'content', e.target.value)} />
-                                                    </div>
-
-                                                    <div className="space-y-2">
-                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">List Items (One per line)</label>
-                                                        <textarea
-                                                            className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit"
-                                                            rows={3}
-                                                            placeholder="Item 1&#10;Item 2"
-                                                            value={section.listItems ? section.listItems.join('\n') : ''}
-                                                            onChange={(e) => {
-                                                                const items = e.target.value.split('\n').filter(i => i.trim() !== '');
-                                                                updateListItem('termsOfService', 'sections', idx, 'listItems', items);
-                                                            }}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            ))}
+                                                ))}
+                                            </div>
                                         </div>
-                                    </div>
+                                    )}
                                 </div>
                             )}
 

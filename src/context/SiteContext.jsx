@@ -156,6 +156,11 @@ export const SiteProvider = ({ children }) => {
                 {
                     title: "9. Changes to This Privacy Policy",
                     content: "We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date. Continued use of the Website after changes are made constitutes acceptance of the revised policy."
+                },
+                {
+                    title: "10. Contact Us",
+                    content: "If you have any questions or concerns about this Privacy Policy, please contact us at:",
+                    secondaryContent: "zionicarc@gmail.com"
                 }
             ]
         },
@@ -196,6 +201,10 @@ export const SiteProvider = ({ children }) => {
                 {
                     title: "8. Changes to Terms",
                     content: "The Website may revise these Terms at any time. Your continued use of the Website constitutes acceptance of the revised Terms."
+                },
+                {
+                    title: "9. Privacy Policy",
+                    content: "For questions about these Terms, contact: zionicarc@gmail.com"
                 }
             ]
         }
