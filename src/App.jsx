@@ -16,7 +16,6 @@ const Contact = lazy(() => import("./components/Contact"));
 const TermsOfService = lazy(() => import("./components/TermsOfService"));
 const PrivacyPolicy = lazy(() => import("./components/PrivacyPolicy"));
 const AdminDashboard = lazy(() => import("./components/AdminDashboard"));
-import DynamicSection from "./components/DynamicSection";
 
 // Simple lightweight loading component
 const SectionLoader = () => (
@@ -66,10 +65,6 @@ const MainSite = () => {
           </Suspense>
         )}
 
-        {/* Custom Admin-Created Sections */}
-        {settings.customSections?.map((section, idx) => (
-          <DynamicSection key={idx} section={section} />
-        ))}
 
         {settings.showWhyChooseUs && (
           <Suspense fallback={<SectionLoader />}>

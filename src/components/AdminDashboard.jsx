@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSite } from '../context/SiteContext';
 import {
     Layout, Eye, EyeOff, Lock, Unlock, ArrowLeft,
-    Home, Info, Briefcase, Zap, Heart, Mail, Save, Plus, Trash2, X, LogOut
+    Home, Info, Briefcase, Zap, Heart, Mail, Save, Plus, Trash2, X, LogOut, FileText
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ImageUpload from './ImageUpload';
@@ -183,7 +183,7 @@ export default function AdminDashboard() {
         { id: 'whyChooseUs', label: 'Why Choose Us', icon: Heart },
         { id: 'contact', label: 'Contact', icon: Mail },
         { id: 'footer', label: 'Footer', icon: Info },
-        { id: 'custom', label: 'Custom Sections', icon: Plus }
+        { id: 'legal', label: 'Legal Docs', icon: FileText }
     ];
 
     return (
@@ -479,119 +479,28 @@ export default function AdminDashboard() {
                                 </div>
                             )}
 
-                            {activeTab === 'custom' && (
-                                <div className="space-y-8">
-                                    <header className="flex justify-between items-end">
-                                        <div>
-                                            <h3 className="text-2xl font-bold uppercase tracking-tight mb-2">Custom Sections</h3>
-                                            <p className="text-gray-500 text-sm">Add completely new blocks of content to your site.</p>
-                                        </div>
-                                        <button
-                                            onClick={() => setLocalSettings(prev => ({ ...prev, customSections: [...prev.customSections, { title: 'New Section', desc: 'Section Description', items: [] }] }))}
-                                            className="flex items-center gap-2 bg-black text-white text-xs font-bold uppercase tracking-widest px-6 py-3 rounded-full hover:bg-black/90 transition-all"
-                                        >
-                                            <Plus size={14} /> Add New Section
-                                        </button>
-                                    </header>
-
-                                    <div className="space-y-12">
-                                        {localSettings.customSections?.map((section, sIdx) => (
-                                            <div key={sIdx} className="p-8 bg-white border border-black/5 rounded-[2rem] shadow-sm space-y-8 relative group">
-                                                <button
-                                                    onClick={() => setLocalSettings(prev => ({ ...prev, customSections: prev.customSections.filter((_, i) => i !== sIdx) }))}
-                                                    className="absolute top-6 right-6 text-gray-300 hover:text-red-500 transition-colors"
-                                                >
-                                                    <Trash2 size={20} />
-                                                </button>
-
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                                    <div className="space-y-2">
-                                                        <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Section Title</label>
-                                                        <input
-                                                            className="w-full bg-[#fcfcfc] border border-black/5 rounded-xl px-4 py-4 text-xl font-bold text-black font-outfit"
-                                                            value={section.title}
-                                                            onChange={(e) => {
-                                                                const newSections = [...localSettings.customSections];
-                                                                newSections[sIdx].title = e.target.value;
-                                                                setLocalSettings(prev => ({ ...prev, customSections: newSections }));
-                                                            }}
-                                                        />
-                                                    </div>
-                                                    <div className="space-y-2">
-                                                        <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Description</label>
-                                                        <textarea
-                                                            className="w-full bg-[#fcfcfc] border border-black/5 rounded-xl px-4 py-4 text-sm text-gray-600 font-outfit"
-                                                            rows={3}
-                                                            value={section.desc}
-                                                            onChange={(e) => {
-                                                                const newSections = [...localSettings.customSections];
-                                                                newSections[sIdx].desc = e.target.value;
-                                                                setLocalSettings(prev => ({ ...prev, customSections: newSections }));
-                                                            }}
-                                                        />
-                                                    </div>
-                                                </div>
-
-                                                <div className="space-y-4 pt-8 border-t border-black/5">
-                                                    <div className="flex justify-between items-center">
-                                                        <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Section Sub-Items / Features</label>
-                                                        <button
-                                                            onClick={() => {
-                                                                const newSections = [...localSettings.customSections];
-                                                                newSections[sIdx].items = [...newSections[sIdx].items, "New Feature Point"];
-                                                                setLocalSettings(prev => ({ ...prev, customSections: newSections }));
-                                                            }}
-                                                            className="text-[10px] font-bold uppercase tracking-widest bg-black/5 px-3 py-1 rounded-lg text-gray-500 hover:bg-black hover:text-white transition-all"
-                                                        >
-                                                            + Add Point
-                                                        </button>
-                                                    </div>
-                                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                        {section.items.map((point, pIdx) => (
-                                                            <div key={pIdx} className="flex gap-3">
-                                                                <input
-                                                                    className="flex-1 bg-gray-50 border border-black/5 rounded-lg px-4 py-2 text-sm text-gray-700 font-outfit"
-                                                                    value={point}
-                                                                    onChange={(e) => {
-                                                                        const newSections = [...localSettings.customSections];
-                                                                        newSections[sIdx].items[pIdx] = e.target.value;
-                                                                        setLocalSettings(prev => ({ ...prev, customSections: newSections }));
-                                                                    }}
-                                                                />
-                                                                <button
-                                                                    onClick={() => {
-                                                                        const newSections = [...localSettings.customSections];
-                                                                        newSections[sIdx].items = newSections[sIdx].items.filter((_, i) => i !== pIdx);
-                                                                        setLocalSettings(prev => ({ ...prev, customSections: newSections }));
-                                                                    }}
-                                                                    className="text-gray-300 hover:text-red-500 transition-colors"
-                                                                >
-                                                                    <X size={16} />
-                                                                </button>
-                                                            </div>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-
-                                        {localSettings.customSections?.length === 0 && (
-                                            <div className="py-20 border-2 border-dashed border-black/5 rounded-[3rem] flex flex-col items-center justify-center text-center">
-                                                <div className="w-16 h-16 bg-gray-50 rounded-3xl flex items-center justify-center mb-4">
-                                                    <Plus className="text-gray-300" />
-                                                </div>
-                                                <p className="text-gray-400 font-medium font-outfit">No custom sections yet. <br /> Add one to create new areas on your home page.</p>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            )}
 
                             {activeTab === 'projects' && (
                                 <div className="space-y-8">
-                                    <header>
-                                        <h3 className="text-2xl font-bold uppercase tracking-tight mb-2">Projects Section</h3>
-                                        <p className="text-gray-500 text-sm">Update the header and "View All" button text.</p>
+                                    <header className="flex items-center justify-between">
+                                        <div>
+                                            <h3 className="text-2xl font-bold uppercase tracking-tight mb-2">Projects Section</h3>
+                                            <p className="text-gray-500 text-sm">Update the header and "View All" button text.</p>
+                                        </div>
+                                        <div className="flex items-center gap-4 bg-white border border-black/5 p-4 rounded-2xl shadow-sm">
+                                            <div className="text-right">
+                                                <h4 className="font-bold uppercase text-[10px] text-black">Section Visibility</h4>
+                                                <p className="text-[9px] text-gray-400 font-medium">Toggle on the Home Page</p>
+                                            </div>
+                                            <button
+                                                onClick={() => setLocalSettings(prev => ({ ...prev, showProjects: !prev.showProjects }))}
+                                                className={`relative w-14 h-7 rounded-full transition-all flex items-center px-1 ${localSettings.showProjects ? 'bg-black' : 'bg-gray-100 border border-black/5'}`}
+                                            >
+                                                <div className={`w-5 h-5 rounded-full transition-all flex items-center justify-center ${localSettings.showProjects ? 'bg-white translate-x-7' : 'bg-gray-300'}`}>
+                                                    {localSettings.showProjects ? <Eye size={10} className="text-black" /> : <EyeOff size={10} className="text-gray-600" />}
+                                                </div>
+                                            </button>
+                                        </div>
                                     </header>
                                     <div className="space-y-6">
                                         <div className="space-y-2">
@@ -691,15 +600,19 @@ export default function AdminDashboard() {
                                         <p className="text-gray-500 text-sm">Update the call to action.</p>
                                     </header>
                                     <div className="space-y-6">
+                                        <div className="p-6 bg-black/5 rounded-2xl border border-black/10 mb-8">
+                                            <h4 className="text-xs font-bold uppercase tracking-widest text-black mb-2">Section: Start a Project</h4>
+                                            <p className="text-[10px] text-gray-500 uppercase tracking-widest">This controls the main heading and subtext in the Contact section.</p>
+                                        </div>
                                         <div className="space-y-2">
-                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Heading</label>
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Heading (e.g. Start a Project)</label>
                                             <input className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit" value={localSettings.contact.title} onChange={(e) => updateField('contact', 'title', e.target.value)} />
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Brief Text</label>
-                                            <textarea className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black rows={3} font-outfit" value={localSettings.contact.description} onChange={(e) => updateField('contact', 'description', e.target.value)} />
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Brief Text / Description</label>
+                                            <textarea className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black rows={3} font-outfit leading-relaxed" value={localSettings.contact.description} onChange={(e) => updateField('contact', 'description', e.target.value)} />
                                         </div>
-                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-outfit">
+                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-outfit pt-4">
                                             <div className="space-y-2">
                                                 <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Email Address</label>
                                                 <input className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit" value={localSettings.contact.email} onChange={(e) => updateField('contact', 'email', e.target.value)} />
@@ -724,13 +637,158 @@ export default function AdminDashboard() {
                                         <p className="text-gray-500 text-sm">Manage brand tagline and business info.</p>
                                     </header>
                                     <div className="space-y-6">
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Brand Name</label>
+                                                <input className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit" value={localSettings.footer.brandName} onChange={(e) => updateField('footer', 'brandName', e.target.value)} />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Copyright Text</label>
+                                                <input className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit" value={localSettings.footer.copyright} onChange={(e) => updateField('footer', 'copyright', e.target.value)} />
+                                            </div>
+                                        </div>
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Brand Tagline</label>
-                                            <textarea className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black rows={2} font-outfit" value={localSettings.footer.tagline} onChange={(e) => updateField('footer', 'tagline', e.target.value)} />
+                                            <textarea className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black rows={2} font-outfit leading-relaxed" value={localSettings.footer.tagline} onChange={(e) => updateField('footer', 'tagline', e.target.value)} />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Footer Quote</label>
+                                            <textarea className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black rows={2} font-outfit leading-relaxed italic" value={localSettings.footer.quote} onChange={(e) => updateField('footer', 'quote', e.target.value)} />
                                         </div>
                                         <div className="space-y-2">
                                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Operating / Call Timings</label>
                                             <input className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit" value={localSettings.footer.timings} onChange={(e) => updateField('footer', 'timings', e.target.value)} />
+                                        </div>
+                                        <div className="grid grid-cols-2 gap-4 pt-4 border-t border-black/5">
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Developer Agency Name</label>
+                                                <input className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit" value={localSettings.footer.developerName} onChange={(e) => updateField('footer', 'developerName', e.target.value)} />
+                                            </div>
+                                            <div className="space-y-2">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Developer Agency Link</label>
+                                                <input className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit" value={localSettings.footer.developerLink} onChange={(e) => updateField('footer', 'developerLink', e.target.value)} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeTab === 'legal' && (
+                                <div className="space-y-12">
+                                    <header>
+                                        <h3 className="text-2xl font-bold uppercase tracking-tight mb-2">Legal Documents</h3>
+                                        <p className="text-gray-500 text-sm">Manage Privacy Policy and Terms of Service.</p>
+                                    </header>
+
+                                    {/* Privacy Policy */}
+                                    <div className="space-y-6">
+                                        <div className="flex items-center justify-between pb-4 border-b border-black/5">
+                                            <h4 className="text-lg font-bold uppercase tracking-widest">Privacy Policy</h4>
+                                            <button onClick={() => addListItem('privacyPolicy', 'sections', { title: 'New Section', content: 'Section content...' })} className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest bg-black/5 hover:bg-black text-gray-500 hover:text-white px-3 py-1 rounded-lg transition-all">
+                                                <Plus size={10} /> Add Section
+                                            </button>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Last Updated Text</label>
+                                            <input
+                                                className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit"
+                                                value={localSettings.privacyPolicy?.lastUpdated || ''}
+                                                onChange={(e) => setLocalSettings(prev => ({ ...prev, privacyPolicy: { ...prev.privacyPolicy, lastUpdated: e.target.value } }))}
+                                            />
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            {localSettings.privacyPolicy?.sections?.map((section, idx) => (
+                                                <div key={idx} className="p-6 bg-white border border-black/5 rounded-2xl space-y-4 relative group shadow-sm">
+                                                    <button onClick={() => removeListItem('privacyPolicy', 'sections', idx)} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
+                                                        <Trash2 size={16} />
+                                                    </button>
+
+                                                    <div className="space-y-2">
+                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Section Title</label>
+                                                        <input className="w-full bg-transparent text-sm font-bold border-b border-black/10 text-black font-outfit py-2" value={section.title} onChange={(e) => updateListItem('privacyPolicy', 'sections', idx, 'title', e.target.value)} />
+                                                    </div>
+
+                                                    <div className="space-y-2">
+                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Content</label>
+                                                        <textarea className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit leading-relaxed" rows={3} value={section.content} onChange={(e) => updateListItem('privacyPolicy', 'sections', idx, 'content', e.target.value)} />
+                                                    </div>
+
+                                                    {/* Simple List Items Management */}
+                                                    <div className="space-y-2">
+                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">List Items (One per line)</label>
+                                                        <textarea
+                                                            className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit"
+                                                            rows={3}
+                                                            placeholder="Item 1&#10;Item 2&#10;Item 3"
+                                                            value={section.listItems ? section.listItems.join('\n') : ''}
+                                                            onChange={(e) => {
+                                                                const items = e.target.value.split('\n').filter(i => i.trim() !== '');
+                                                                updateListItem('privacyPolicy', 'sections', idx, 'listItems', items);
+                                                            }}
+                                                        />
+                                                    </div>
+
+                                                    <div className="space-y-2">
+                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Secondary Content (After List)</label>
+                                                        <textarea className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit leading-relaxed" rows={2} value={section.secondaryContent || ''} onChange={(e) => updateListItem('privacyPolicy', 'sections', idx, 'secondaryContent', e.target.value)} />
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Terms of Service */}
+                                    <div className="space-y-6 pt-12 border-t border-gray-100">
+                                        <div className="flex items-center justify-between pb-4 border-b border-black/5">
+                                            <h4 className="text-lg font-bold uppercase tracking-widest">Terms of Service</h4>
+                                            <button onClick={() => addListItem('termsOfService', 'sections', { title: 'New Section', content: 'Section content...' })} className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest bg-black/5 hover:bg-black text-gray-500 hover:text-white px-3 py-1 rounded-lg transition-all">
+                                                <Plus size={10} /> Add Section
+                                            </button>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Last Updated Text</label>
+                                            <input
+                                                className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit"
+                                                value={localSettings.termsOfService?.lastUpdated || ''}
+                                                onChange={(e) => setLocalSettings(prev => ({ ...prev, termsOfService: { ...prev.termsOfService, lastUpdated: e.target.value } }))}
+                                            />
+                                        </div>
+
+                                        <div className="space-y-4">
+                                            {localSettings.termsOfService?.sections?.map((section, idx) => (
+                                                <div key={idx} className="p-6 bg-white border border-black/5 rounded-2xl space-y-4 relative group shadow-sm">
+                                                    <button onClick={() => removeListItem('termsOfService', 'sections', idx)} className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
+                                                        <Trash2 size={16} />
+                                                    </button>
+
+                                                    <div className="space-y-2">
+                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Section Title</label>
+                                                        <input className="w-full bg-transparent text-sm font-bold border-b border-black/10 text-black font-outfit py-2" value={section.title} onChange={(e) => updateListItem('termsOfService', 'sections', idx, 'title', e.target.value)} />
+                                                    </div>
+
+                                                    <div className="space-y-2">
+                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Content</label>
+                                                        <textarea className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit leading-relaxed" rows={3} value={section.content} onChange={(e) => updateListItem('termsOfService', 'sections', idx, 'content', e.target.value)} />
+                                                    </div>
+
+                                                    <div className="space-y-2">
+                                                        <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">List Items (One per line)</label>
+                                                        <textarea
+                                                            className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit"
+                                                            rows={3}
+                                                            placeholder="Item 1&#10;Item 2"
+                                                            value={section.listItems ? section.listItems.join('\n') : ''}
+                                                            onChange={(e) => {
+                                                                const items = e.target.value.split('\n').filter(i => i.trim() !== '');
+                                                                updateListItem('termsOfService', 'sections', idx, 'listItems', items);
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
                                 </div>

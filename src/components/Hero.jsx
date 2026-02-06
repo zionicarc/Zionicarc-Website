@@ -88,13 +88,13 @@ export default function Hero() {
           </p>
 
           {/* Buttons */}
-          <div className="flex flex-row flex-wrap items-center justify-center gap-6 sm:gap-16 md:gap-24 pt-12 md:pt-16">
+          <div className="flex flex-col md:flex-row flex-wrap items-center justify-center gap-5 md:gap-24 pt-12 md:pt-16">
             <button
               onClick={() => {
                 const servicesSection = document.getElementById('detailed-services');
                 servicesSection?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="flex items-center gap-4 text-black font-medium text-base md:text-[17px] uppercase tracking-[0.3em] transition-opacity hover:opacity-50"
+              className="flex items-center justify-center gap-4 text-black font-medium text-base md:text-[17px] uppercase tracking-[0.3em] transition-opacity hover:opacity-50 w-auto"
             >
               <span>OUR SERVICES</span>
               <span className="text-2xl mt-[-2px]">→</span>
@@ -104,7 +104,7 @@ export default function Hero() {
                 const contactSection = document.getElementById('contact');
                 contactSection?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="flex items-center gap-4 text-black font-medium text-base md:text-[17px] uppercase tracking-[0.3em] transition-opacity hover:opacity-50"
+              className="flex items-center justify-center gap-4 text-black font-medium text-base md:text-[17px] uppercase tracking-[0.3em] transition-opacity hover:opacity-50 w-auto"
             >
               <span>CONTACT US</span>
               <span className="text-2xl mt-[-2px]">→</span>

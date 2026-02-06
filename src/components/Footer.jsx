@@ -26,7 +26,7 @@ export default function Footer({ onOpenTerms, onOpenPrivacy }) {
           {/* Brand Identity */}
           <div className="space-y-6">
             <a href="#" className="font-montserrat text-xl tracking-[0.3em] font-normal uppercase">
-              Z'IONIC <span className="font-bold">ARC</span>
+              {settings.footer.brandName.split(' ')[0]} <span className="font-bold">{settings.footer.brandName.split(' ').slice(1).join(' ')}</span>
             </a>
             <p className="text-gray-500 text-sm leading-relaxed max-w-xs font-normal">
               {settings.footer.tagline}
@@ -100,7 +100,7 @@ export default function Footer({ onOpenTerms, onOpenPrivacy }) {
                 {settings.footer.timings}
               </p>
               <p className="text-gray-500 text-xs italic font-normal leading-relaxed pt-4 border-t border-white/5">
-                "Architecture should speak of its time and place, but yearn for timelessness."
+                "{settings.footer.quote}"
               </p>
             </div>
           </div>
@@ -108,11 +108,12 @@ export default function Footer({ onOpenTerms, onOpenPrivacy }) {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 md:mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em] font-normal">
-            &copy; {currentYear} Z'IONIC ARC. All Rights Reserved.
-            <span className="mx-4 opacity-20">|</span>
-            Designed by <a href="https://ruahverse.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition-colors">Ruah Verse</a>
+        <div className="mt-12 md:mt-20 pt-8 border-t border-white/5 flex flex-col xl:flex-row justify-between items-center gap-6">
+          <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em] font-normal text-center xl:text-left">
+            &copy; {currentYear} {settings.footer.brandName}. {settings.footer.copyright}
+            <span className="mx-4 opacity-20 hidden xl:inline">|</span>
+            <br className="xl:hidden" />
+            <span className="whitespace-nowrap">Designed by <a href={settings.footer.developerLink} target="_blank" rel="noopener noreferrer" className="text-white hover:text-gray-300 transition-colors">{settings.footer.developerName}</a></span>
           </p>
           <div className="flex gap-8">
             <a
@@ -121,7 +122,7 @@ export default function Footer({ onOpenTerms, onOpenPrivacy }) {
                 e.preventDefault();
                 onOpenPrivacy();
               }}
-              className="text-[10px] text-gray-500 uppercase tracking-[0.2em] hover:text-white transition-colors font-normal"
+              className="text-[10px] text-gray-500 uppercase tracking-[0.2em] hover:text-white transition-colors font-normal whitespace-nowrap"
             >
               Privacy Policy
             </a>
@@ -131,7 +132,7 @@ export default function Footer({ onOpenTerms, onOpenPrivacy }) {
                 e.preventDefault();
                 onOpenTerms();
               }}
-              className="text-[10px] text-gray-500 uppercase tracking-[0.2em] hover:text-white transition-colors font-normal"
+              className="text-[10px] text-gray-500 uppercase tracking-[0.2em] hover:text-white transition-colors font-normal whitespace-nowrap"
             >
               Terms of Service
             </a>

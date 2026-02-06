@@ -29,17 +29,17 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 w-full z-50">
       {/* Reduced Header Height on Mobile: h-16 vs h-20 */}
-      <nav className="relative z-50 bg-white/90 backdrop-blur-md border-b border-black/5 h-16 md:h-20 flex items-center transition-all">
-        <div className="w-full px-8 md:px-12 flex items-center justify-between">
+      <nav className="relative z-50 bg-white/90 backdrop-blur-md border-b border-black/5 h-16 xl:h-19 flex items-center transition-all">
+        <div className="w-full px-8 xl:px-12 flex items-center justify-between">
 
           <div className="flex items-center gap-16">
             {/* Logo */}
-            <a href="#" className="font-montserrat text-lg md:text-xl tracking-[0.2em] font-light uppercase">
+            <a href="#" className="font-montserrat text-lg xl:text-xl tracking-[0.2em] font-light uppercase">
               Z'IONIC <span className="font-bold">ARC</span>
             </a>
 
             {/* Desktop Nav Links */}
-            <ul className="hidden md:flex items-center gap-8 font-outfit text-[11px] font-medium uppercase tracking-[0.2em] text-black">
+            <ul className="hidden xl:flex items-center gap-8 font-outfit text-[11px] font-medium uppercase tracking-[0.2em] text-black">
               {navLinks.filter(link => link.label !== "Contact").map((link) => (
                 <li key={link.label}>
                   <a href={link.href} className="hover:text-black/40 transition-colors">
@@ -51,7 +51,7 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Right Action */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden xl:flex items-center">
             {settings.showContact && (
               <a
                 href="#contact"
@@ -64,7 +64,7 @@ export default function Navbar() {
 
           {/* Dual-State Mobile Toggle Button */}
           <button
-            className={`md:hidden flex items-center justify-center transition-all duration-300 active:scale-90 z-[60] ${open ? 'w-10 h-10 bg-black rounded-2xl shadow-lg' : 'w-8 h-8 bg-transparent'
+            className={`xl:hidden flex items-center justify-center transition-all duration-300 active:scale-90 z-[60] ${open ? 'w-10 h-10 bg-black rounded-2xl shadow-lg' : 'w-8 h-8 bg-transparent'
               }`}
             onClick={() => setOpen(!open)}
             aria-label="Toggle Menu"
@@ -88,7 +88,7 @@ export default function Navbar() {
 
       {/* Classic Mobile Dropdown */}
       <div
-        className={`fixed inset-0 z-40 md:hidden transition-all duration-500 ${open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`fixed inset-0 z-40 xl:hidden transition-all duration-500 ${open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
       >
         {/* Semi-transparent Backdrop with Blur */}
         <div

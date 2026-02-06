@@ -94,9 +94,111 @@ export const SiteProvider = ({ children }) => {
         },
         footer: {
             tagline: "Redefining contemporary architecture with a fusion of sculptural forms and human experience.",
-            timings: "Call Timings: 9:00 AM – 5:00 PM"
+            timings: "Call Timings: 9:00 AM – 5:00 PM",
+            quote: "Architecture should speak of its time and place, but yearn for timelessness.",
+            brandName: "Z'IONIC ARC",
+            copyright: "All Rights Reserved.",
+            developerName: "Ruah Verse",
         },
-        customSections: []
+        privacyPolicy: {
+            lastUpdated: "December 2025",
+            sections: [
+                {
+                    title: "1. Introduction",
+                    content: "Your privacy is important to us. This Privacy Policy explains how https://zionic-arc-website.vercel.app (\"we,\" \"us,\" \"our,\" or the \"Website\") collects, uses, and protects your personal information when you visit or interact with our Website."
+                },
+                {
+                    title: "2. Information We Collect",
+                    content: "We may collect personal information that you voluntarily provide to us, including but not limited to:",
+                    listItems: ["Name", "Email address", "Contact information"],
+                    secondaryContent: "We may also automatically collect certain non-personal information such as browser type, IP address, device information, and pages visited through cookies and analytics tools."
+                },
+                {
+                    title: "3. Use of Your Information",
+                    content: "We use the information we collect to:",
+                    listItems: [
+                        "Provide, operate, and improve the Website",
+                        "Respond to inquiries and communications",
+                        "Send updates or marketing communications, where you have opted in"
+                    ]
+                },
+                {
+                    title: "4. Cookies and Tracking Technologies",
+                    content: "We use cookies and similar tracking technologies to analyze Website usage and enhance user experience. You may control or disable cookies through your browser settings; however, some features of the Website may not function properly if cookies are disabled."
+                },
+                {
+                    title: "5. Information Sharing",
+                    content: "We do not sell, trade, or rent your personal information to third parties. We may share information only in the following circumstances:",
+                    listItems: [
+                        "To comply with legal obligations",
+                        "To protect our rights, property, or safety",
+                        "With trusted service providers who assist in operating the Website, subject to confidentiality obligations"
+                    ]
+                },
+                {
+                    title: "6. Data Security",
+                    content: "We implement reasonable technical and organizational measures to protect your personal information from unauthorized access, disclosure, alteration, or destruction. However, no method of data transmission or storage is completely secure."
+                },
+                {
+                    title: "7. Your Rights",
+                    content: "Depending on applicable laws and your jurisdiction, you may have the right to:",
+                    listItems: [
+                        "Access, update, or delete your personal information",
+                        "Restrict or object to certain processing activities",
+                        "Withdraw consent where processing is based on consent"
+                    ],
+                    secondaryContent: "To exercise these rights, please contact us using the details below."
+                },
+                {
+                    title: "8. Children’s Privacy",
+                    content: "This Website is not intended for children under the age of 16. We do not knowingly collect personal information from children. If you believe that such information has been collected, please contact us so it can be promptly removed."
+                },
+                {
+                    title: "9. Changes to This Privacy Policy",
+                    content: "We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated effective date. Continued use of the Website after changes are made constitutes acceptance of the revised policy."
+                }
+            ]
+        },
+        termsOfService: {
+            lastUpdated: "December 2025",
+            sections: [
+                {
+                    title: "1. Agreement to Terms",
+                    content: "By accessing or using Z'IONIC ARC, you agree to be bound by these Terms and Conditions and all applicable laws and regulations. If you do not agree, do not use this Website."
+                },
+                {
+                    title: "2. Use of the Website",
+                    listItems: [
+                        "a. You agree to use the Website only for lawful purposes.",
+                        "b. You shall not upload, post, transmit, or otherwise make available any content that violates third-party rights."
+                    ]
+                },
+                {
+                    title: "3. Intellectual Property",
+                    content: "All content on this Website (text, graphics, logos, images) is the property of the Website owner or its licensors and is protected by applicable copyright, trademark, and other intellectual property laws."
+                },
+                {
+                    title: "4. User Content",
+                    content: "If you submit content to the Website (comments, feedback), you grant the Website a worldwide, non-exclusive, royalty-free license to use, reproduce, modify, adapt, publish, and distribute that content."
+                },
+                {
+                    title: "5. Limitation of Liability",
+                    content: "The Website and all information are provided \"as is,\" without warranty of any kind. The owner will not be liable for any direct, indirect, incidental, consequential, or punitive damages arising from your access or use of the Website."
+                },
+                {
+                    title: "6. Links to Third-Party Sites",
+                    content: "The Website may contain links to third-party websites. These links are provided for convenience only. The owner does not control and is not responsible for the content of third-party sites."
+                },
+                {
+                    title: "7. Governing Law",
+                    content: "These Terms will be governed by and construed in accordance with the laws of India without regard to conflict of law provisions."
+                },
+                {
+                    title: "8. Changes to Terms",
+                    content: "The Website may revise these Terms at any time. Your continued use of the Website constitutes acceptance of the revised Terms."
+                }
+            ]
+        }
     };
 
     const [settings, setSettings] = useState(defaultSettings);
