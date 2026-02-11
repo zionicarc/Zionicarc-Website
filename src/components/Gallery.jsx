@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useSite } from "../context/SiteContext";
 
 export default function Gallery() {
@@ -7,6 +8,7 @@ export default function Gallery() {
     const data = settings.gallery;
     const galleryRef = useRef(null);
     const itemsRef = useRef([]);
+    const [selectedImg, setSelectedImg] = useState(null);
 
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
@@ -27,6 +29,27 @@ export default function Gallery() {
 
         return () => observer.disconnect();
     }, [data.images]);
+
+    // Handle ESC key to close lightbox
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') setSelectedImg(null);
+            if (e.key === 'ArrowRight' && selectedImg !== null) nextImg();
+            if (e.key === 'ArrowLeft' && selectedImg !== null) prevImg();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [selectedImg]);
+
+    const nextImg = () => {
+        if (selectedImg === null) return;
+        setSelectedImg((selectedImg + 1) % data.images.length);
+    };
+
+    const prevImg = () => {
+        if (selectedImg === null) return;
+        setSelectedImg((selectedImg - 1 + data.images.length) % data.images.length);
+    };
 
     if (!data || !data.images || data.images.length === 0) return null;
 
@@ -50,8 +73,9 @@ export default function Gallery() {
                     {data.images.map((img, index) => (
                         <div
                             key={index}
-                            className="break-inside-avoid relative group overflow-hidden rounded-xl bg-gray-200"
+                            className="break-inside-avoid relative group overflow-hidden rounded-xl bg-gray-200 cursor-zoom-in"
                             ref={el => itemsRef.current[index] = el}
+                            onClick={() => setSelectedImg(index)}
                         >
                             <img
                                 src={img}
@@ -63,8 +87,50 @@ export default function Gallery() {
                         </div>
                     ))}
                 </div>
-
             </div>
+
+            {/* Lightbox Overlay */}
+            {selectedImg !== null && (
+                <div
+                    className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 md:p-8 animate-fadeIn"
+                    onClick={() => setSelectedImg(null)}
+                >
+                    <button
+                        className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors p-2 z-[110]"
+                        onClick={() => setSelectedImg(null)}
+                    >
+                        <X size={32} strokeWidth={1.5} />
+                    </button>
+
+                    <button
+                        className="absolute left-4 md:left-8 text-white/50 hover:text-white transition-colors p-2 z-[110]"
+                        onClick={(e) => { e.stopPropagation(); prevImg(); }}
+                    >
+                        <ChevronLeft size={48} strokeWidth={1} />
+                    </button>
+
+                    <div
+                        className="relative max-w-5xl max-h-full flex flex-col items-center gap-4"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <img
+                            src={data.images[selectedImg]}
+                            alt="Selected gallery view"
+                            className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
+                        />
+                        <p className="text-white/40 text-xs font-bold uppercase tracking-[0.3em]">
+                            {selectedImg + 1} / {data.images.length}
+                        </p>
+                    </div>
+
+                    <button
+                        className="absolute right-4 md:right-8 text-white/50 hover:text-white transition-colors p-2 z-[110]"
+                        onClick={(e) => { e.stopPropagation(); nextImg(); }}
+                    >
+                        <ChevronRight size={48} strokeWidth={1} />
+                    </button>
+                </div>
+            )}
         </section>
     );
 }

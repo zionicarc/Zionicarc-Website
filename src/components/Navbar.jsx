@@ -30,8 +30,8 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 w-full z-50">
       {/* Reduced Header Height on Mobile: h-16 vs h-20 */}
-      <nav className="relative z-50 bg-white/90 backdrop-blur-md border-b border-black/5 h-16 xl:h-19 flex items-center transition-all px-4 xl:px-0">
-        <div className="max-w-[1440px] mx-auto w-full xl:px-4 2xl:px-14 flex items-center justify-between">
+      <nav className="relative z-50 bg-white/90 backdrop-blur-md border-b border-black/5 h-16 xl:h-20 flex items-center transition-all px-6 xl:px-12 2xl:px-24">
+        <div className="max-w-[1440px] mx-auto w-full flex items-center justify-between">
 
           <div className="flex items-center gap-3 xl:gap-4 2xl:gap-16">
             {/* Logo */}
@@ -40,7 +40,7 @@ export default function Navbar() {
             </a>
 
             {/* Desktop Nav Links */}
-            <ul className="hidden xl:flex items-center gap-2 2xl:gap-8 font-outfit text-[10px] 2xl:text-[11px] font-medium uppercase tracking-tight 2xl:tracking-[0.2em] text-black">
+            <ul className="hidden xl:flex items-center gap-6 font-outfit text-[11px] font-medium uppercase tracking-[0.1em] text-black">
               {navLinks.filter(link => link.label !== "Contact").map((link) => (
                 <li key={link.label}>
                   <a href={link.href} className="hover:text-black/40 transition-colors whitespace-nowrap">
@@ -56,7 +56,7 @@ export default function Navbar() {
             {settings.showContact && (
               <a
                 href="#contact"
-                className="bg-black text-white px-5 xl:px-6 2xl:px-8 py-3 rounded-full font-outfit text-[10px] 2xl:text-[11px] font-bold uppercase tracking-tight 2xl:tracking-[0.2em] transition-all hover:bg-black/80 hover:scale-105 active:scale-95 shadow-lg shadow-black/10 whitespace-nowrap"
+                className="bg-black text-white px-7 py-3.5 rounded-full font-outfit text-[11px] font-bold uppercase tracking-widest transition-all hover:bg-black/80 hover:scale-105 active:scale-95 shadow-xl shadow-black/10 whitespace-nowrap"
               >
                 Start Your Project
               </a>

@@ -2,12 +2,18 @@ import React, { useState } from 'react';
 import { useSite } from '../context/SiteContext';
 import {
     Layout, Eye, EyeOff, Lock, Unlock, ArrowLeft,
-    Home, Info, Briefcase, Zap, Heart, Mail, Save, Plus, Trash2, X, LogOut, FileText
+    Home, Info, Briefcase, Zap, Heart, Mail, Save, Plus, Trash2, X, LogOut, FileText,
+    Lightbulb, Settings, Users, CheckCircle, Award, Compass, Layers, Box
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import ImageUpload from './ImageUpload';
 import { auth } from '../lib/firebase';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+
+const IconMap = {
+    Lightbulb, Settings, Users, CheckCircle, Award, Compass, Layers, Box,
+    Home, Info, Briefcase, Zap, Heart, Mail, Layout, FileText
+};
 
 export default function AdminDashboard() {
     const { settings, updateSettings, loading } = useSite();
@@ -412,7 +418,15 @@ export default function AdminDashboard() {
                                                         <div className="flex items-center justify-between">
                                                             <div className="flex items-center gap-4">
                                                                 <span className="text-[10px] text-gray-400 uppercase font-bold">Icon:</span>
-                                                                <input className="bg-transparent border-b border-black/10 text-xs py-1 text-black font-outfit" value={item.icon} onChange={(e) => updateListItem('expertise', 'items', idx, 'icon', e.target.value)} />
+                                                                <div className="flex items-center gap-2">
+                                                                    <input className="bg-transparent border-b border-black/10 text-xs py-1 text-black font-outfit w-24" value={item.icon} onChange={(e) => updateListItem('expertise', 'items', idx, 'icon', e.target.value)} />
+                                                                    <div className="p-1.5 bg-black/5 rounded-lg text-black">
+                                                                        {(() => {
+                                                                            const Icon = IconMap[item.icon] || Box;
+                                                                            return <Icon size={14} />;
+                                                                        })()}
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                             <button onClick={() => window.confirm('Are you sure you want to delete this item?') && removeListItem('expertise', 'items', idx)} className="absolute top-4 right-4 w-auto p-0 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 text-gray-300 hover:text-red-500 transition-all">
                                                                 <Trash2 size={16} />
@@ -566,6 +580,7 @@ export default function AdminDashboard() {
                                                                 <input className="w-full bg-transparent text-sm font-bold border-b border-black/10 text-black font-outfit" placeholder="Name" value={item.name} onChange={(e) => updateListItem('projects', 'items', idx, 'name', e.target.value)} />
                                                                 <input className="w-full bg-transparent text-xs text-gray-500 border-b border-black/10 font-outfit" placeholder="Location" value={item.location} onChange={(e) => updateListItem('projects', 'items', idx, 'location', e.target.value)} />
                                                                 <input className="w-full bg-transparent text-[10px] text-gray-400 uppercase tracking-widest border-b border-black/10 font-outfit" placeholder="Type" value={item.type} onChange={(e) => updateListItem('projects', 'items', idx, 'type', e.target.value)} />
+                                                                <input className="w-full bg-transparent text-[10px] text-blue-500 border-b border-black/10 font-outfit" placeholder="Project Link (e.g. # or url)" value={item.link || ''} onChange={(e) => updateListItem('projects', 'items', idx, 'link', e.target.value)} />
 
                                                                 <div className="pt-2">
                                                                     <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-2 block">Project Image</label>
@@ -702,7 +717,15 @@ export default function AdminDashboard() {
                                                     <textarea className="w-full bg-gray-50 border border-black/5 rounded-lg px-4 py-3 text-sm text-gray-600 font-outfit" rows={2} value={item.desc} onChange={(e) => updateListItem('whyChooseUs', 'reasons', idx, 'desc', e.target.value)} />
                                                     <div className="flex items-center gap-4">
                                                         <span className="text-[10px] text-gray-400 uppercase font-bold">Icon:</span>
-                                                        <input className="bg-transparent border-b border-black/10 text-xs py-1 text-black font-outfit" value={item.icon} onChange={(e) => updateListItem('whyChooseUs', 'reasons', idx, 'icon', e.target.value)} />
+                                                        <div className="flex items-center gap-2">
+                                                            <input className="bg-transparent border-b border-black/10 text-xs py-1 text-black font-outfit w-24" value={item.icon} onChange={(e) => updateListItem('whyChooseUs', 'reasons', idx, 'icon', e.target.value)} />
+                                                            <div className="p-1.5 bg-black/5 rounded-lg text-black">
+                                                                {(() => {
+                                                                    const Icon = IconMap[item.icon] || Box;
+                                                                    return <Icon size={14} />;
+                                                                })()}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             ))}
@@ -829,7 +852,7 @@ export default function AdminDashboard() {
                                                 <input
                                                     className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit"
                                                     value={localSettings.privacyPolicy?.lastUpdated || ''}
-                                                    onChange={(e) => setLocalSettings(prev => ({ ...prev, privacyPolicy: { ...prev.privacyPolicy, lastUpdated: e.target.value } }))}
+                                                    onChange={(e) => updateField('privacyPolicy', 'lastUpdated', e.target.value)}
                                                 />
                                             </div>
 
@@ -890,7 +913,7 @@ export default function AdminDashboard() {
                                                 <input
                                                     className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit"
                                                     value={localSettings.termsOfService?.lastUpdated || ''}
-                                                    onChange={(e) => setLocalSettings(prev => ({ ...prev, termsOfService: { ...prev.termsOfService, lastUpdated: e.target.value } }))}
+                                                    onChange={(e) => updateField('termsOfService', 'lastUpdated', e.target.value)}
                                                 />
                                             </div>
 
