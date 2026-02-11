@@ -55,7 +55,7 @@ export const SiteProvider = ({ children }) => {
         },
         about: {
             title: "About Us",
-            description: "An architecture and design firm specialized in creating innovative, functional, and aesthetically pleasing spaces across residential, commercial, and hospitality sectors. Each project is a unique reflection of our clients' vision, values and aspirations, thoughtfully translated into meaningful design with precision, care and creativity."
+            content: "An architecture and design firm specialized in creating innovative, functional, and aesthetically pleasing spaces across residential, commercial, and hospitality sectors. Each project is a unique reflection of our clients' vision, values and aspirations, thoughtfully translated into meaningful design with precision, care and creativity."
         },
         vision: {
             title: "Our Vision",
@@ -75,30 +75,30 @@ export const SiteProvider = ({ children }) => {
             title: "Our Approach",
             description: "Our approach to design is experimental and sculptural. We begin with free hand sketches allowing forms to evolve intuitively and then refine them using technology.",
             steps: [
-                { no: "01", title: "Fragmentation", desc: "At Z'IONIC ARC, we break our design into layered intersecting volumes allowing multiple perspectives and experiences instead of a single rigid form." },
-                { no: "02", title: "Sustainability", desc: "Our commitment to sustainable materials is rooted in understanding that every choice we make and should support human health, advance social equity, protect ecosystems, mitigate climate impact and contribute to a circular economy." },
-                { no: "03", title: "Challenging Perception", desc: "Architecture as a form of research , cultural critique and humanity service to uplift communities , empower businesses and to create lasting value rather than a commercial service." }
+                { title: "Fragmentation", desc: "At Z'IONIC ARC, we break our design into layered intersecting volumes allowing multiple perspectives and experiences instead of a single rigid form." },
+                { title: "Sustainability", desc: "Our commitment to sustainable materials is rooted in understanding that every choice we make and should support human health, advance social equity, protect ecosystems, mitigate climate impact and contribute to a circular economy." },
+                { title: "Challenging Perception", desc: "Architecture as a form of research , cultural critique and humanity service to uplift communities , empower businesses and to create lasting value rather than a commercial service." }
             ]
         },
         services: {
             title: "Our Services",
             caption: "From bold architectural concepts to refined interiors Z'IONIC ARC delivers end to end solutions.",
             items: [
-                { title: "Residential Architecture", subtitle: "Contemporary and Tailored", desc: "Our residential architecture expertise transforms spaces into exceptional homes that balance aesthetics and functionality." },
-                { title: "Interior Design", subtitle: "Luxury, Seamless execution, Price Conscious.", desc: "We deliver personalized interior design and build services; complete refurbishments, extensions, existing space conversions and top notch renovations." },
-                { title: "Institutional Architecture", subtitle: "Designing across generations.", desc: "We specialize in designing institutional buildings that inspire learning, collaboration, and community engagement." },
-                { title: "Commercial Architecture", subtitle: "Tailored Expertise across every stage.", desc: "We create spaces that transform employee well-being, boost productivity, and represent your brand’s personality." },
-                { title: "Construction Monitoring", subtitle: "Precision oversight from foundation to finish.", desc: "Regular site visits and progress reports to verify contractor performance and quality." },
-                { title: "Fellowship and Mentorship", subtitle: "Nurturing the next generation of architects.", desc: "Z'IONIC ARC is committed to building an inclusive and equitable workplace by investing in programs that support mentorship." }
+                { title: "Residential Architecture", desc: "Our residential architecture expertise transforms spaces into exceptional homes that balance aesthetics and functionality.", img: "" },
+                { title: "Interior Design", desc: "We deliver personalized interior design and build services; complete refurbishments, extensions, existing space conversions and top notch renovations.", img: "" },
+                { title: "Institutional Architecture", desc: "We specialize in designing institutional buildings that inspire learning, collaboration, and community engagement.", img: "" },
+                { title: "Commercial Architecture", desc: "We create spaces that transform employee well-being, boost productivity, and represent your brand’s personality.", img: "" },
+                { title: "Construction Monitoring", desc: "Regular site visits and progress reports to verify contractor performance and quality.", img: "" },
+                { title: "Fellowship and Mentorship", desc: "Z'IONIC ARC is committed to building an inclusive and equitable workplace by investing in programs that support mentorship.", img: "" }
             ]
         },
         whyChooseUs: {
             title: "Why Choose Us",
             description: "A decade of architectural excellence shaped by experience, collaboration, and clarity of vision.",
-            reasons: [
-                { title: "Experience", desc: "With over 10 years of experience in the industry, Z'IONIC ARC has a proven track record of delivering high-quality, innovative designs.", icon: "Award" },
-                { title: "Expert Team", desc: "Our team of skilled architects, designers, and project managers are passionate about creating spaces that inspire and impress.", icon: "Users" },
-                { title: "Customized Solutions", desc: "Every project is unique. Our customized design solutions are tailored to meet the specific needs and preferences of each client.", icon: "Settings" }
+            items: [
+                { title: "Experience", description: "With over 10 years of experience in the industry, Z'IONIC ARC has a proven track record of delivering high-quality, innovative designs.", icon: "Award" },
+                { title: "Expert Team", description: "Our team of skilled architects, designers, and project managers are passionate about creating spaces that inspire and impress.", icon: "Users" },
+                { title: "Customized Solutions", description: "Every project is unique. Our customized design solutions are tailored to meet the specific needs and preferences of each client.", icon: "Settings" }
             ]
         },
         contact: {
@@ -110,12 +110,12 @@ export const SiteProvider = ({ children }) => {
         },
         projects: {
             title: "Our Work",
-            description: "View all our projects.",
+            caption: "View all our projects.",
             items: [
-                { name: "Aeon Tower", location: "Singapore", img: "https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=2670&auto=format&fit=crop", type: "Commercial", link: "#" },
-                { name: "The Glass House", location: "Switzerland", img: "https://images.unsplash.com/photo-1449156059431-787c1be17d0b?q=80&w=2070&auto=format&fit=crop", type: "Residential", link: "#" },
-                { name: "Skyline Pavilion", location: "Tokyo", img: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=2070&auto=format&fit=crop", type: "Public Design", link: "#" },
-                { name: "Zenith Library", location: "Copenhagen", img: "https://images.unsplash.com/photo-1518005020250-6eb5f3f2d057?q=80&w=2086&auto=format&fit=crop", type: "Institutional", link: "#" }
+                { title: "Aeon Tower", category: "Commercial", platform: "Web", year: "2024", img: "https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=2670&auto=format&fit=crop", link: "#" },
+                { title: "The Glass House", category: "Residential", platform: "Web", year: "2024", img: "https://images.unsplash.com/photo-1449156059431-787c1be17d0b?q=80&w=2070&auto=format&fit=crop", link: "#" },
+                { title: "Skyline Pavilion", category: "Public Design", platform: "Web", year: "2024", img: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=2070&auto=format&fit=crop", link: "#" },
+                { title: "Zenith Library", category: "Institutional", platform: "Web", year: "2024", img: "https://images.unsplash.com/photo-1518005020250-6eb5f3f2d057?q=80&w=2086&auto=format&fit=crop", link: "#" }
             ]
         },
         footer: {

@@ -83,7 +83,7 @@ export default function WhyChooseUs() {
                     <div className="hidden md:block absolute top-10 left-0 right-0 h-[1px] bg-black/10" />
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16">
-                        {data.reasons.map((item, index) => {
+                        {data.items.map((item, index) => {
                             const Icon = IconMap[item.icon] || Box;
                             return (
                                 <div
@@ -106,7 +106,7 @@ export default function WhyChooseUs() {
                                         <strong>{item.title}</strong>
                                     </h3>
                                     <p className="text-gray-700 font-normal leading-relaxed max-w-sm">
-                                        {item.desc}
+                                        {item.description}
                                     </p>
                                 </div>
                             );
