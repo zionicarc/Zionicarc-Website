@@ -15,6 +15,7 @@ const Projects = lazy(() => import("./components/Projects"));
 const Gallery = lazy(() => import("./components/Gallery"));
 const WhyChooseUs = lazy(() => import("./components/WhyChooseUs"));
 const Contact = lazy(() => import("./components/Contact"));
+const GalleryPage = lazy(() => import("./pages/GalleryPage"));
 const TermsOfService = lazy(() => import("./components/TermsOfService"));
 const PrivacyPolicy = lazy(() => import("./components/PrivacyPolicy"));
 const AdminDashboard = lazy(() => import("./components/AdminDashboard"));
@@ -105,6 +106,11 @@ const App = () => {
       <SiteProvider>
         <Routes>
           <Route path="/" element={<MainSite />} />
+          <Route path="/gallery" element={
+            <Suspense fallback={<div className="h-screen bg-white" />}>
+              <GalleryPage />
+            </Suspense>
+          } />
           <Route path="/admin" element={
             <Suspense fallback={<div className="h-screen bg-black" />}>
               <AdminDashboard />

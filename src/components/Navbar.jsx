@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import { useSite } from "../context/SiteContext";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { settings } = useSite();
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
 
   // Toggle body scroll lock
   useEffect(() => {
@@ -16,16 +18,24 @@ export default function Navbar() {
   }, [open]);
 
   const navLinks = [
-    { label: "Home", href: "#", show: true },
-    { label: "About Us", href: "#about", show: settings.showAbout },
-    { label: "Our Vision", href: "#vision", show: settings.showVision },
-    { label: "Our Expertise", href: "#expertise", show: settings.showExpertise },
-    { label: "Our Approach", href: "#approach", show: settings.showApproach },
-    { label: "Our Services", href: "#detailed-services", show: settings.showServices },
-    { label: "Why Choose Us", href: "#why-choose-us", show: settings.showWhyChooseUs },
-    { label: "Our Work", href: "#projects", show: settings.showProjects },
-    { label: "Contact", href: "#contact", show: settings.showContact },
+    { label: "Home", href: "/", isExternal: true, show: true },
+    { label: "About Us", href: isHomePage ? "#about" : "/#about", show: settings.showAbout },
+    { label: "Our Vision", href: isHomePage ? "#vision" : "/#vision", show: settings.showVision },
+    { label: "Our Expertise", href: isHomePage ? "#expertise" : "/#expertise", show: settings.showExpertise },
+    { label: "Our Approach", href: isHomePage ? "#approach" : "/#approach", show: settings.showApproach },
+    { label: "Our Services", href: isHomePage ? "#detailed-services" : "/#detailed-services", show: settings.showServices },
+    { label: "Why Choose Us", href: isHomePage ? "#why-choose-us" : "/#why-choose-us", show: settings.showWhyChooseUs },
+    { label: "Our Work", href: isHomePage ? "#projects" : "/#projects", show: settings.showProjects },
+    { label: "Gallery", href: "/gallery", isExternal: true, show: settings.showGallery },
+    { label: "Contact", href: isHomePage ? "#contact" : "/#contact", show: settings.showContact },
   ].filter(link => link.show);
+
+  const LinkComponent = ({ link, className, children, onClick }) => {
+    if (link.href.startsWith("#") && isHomePage) {
+      return <a href={link.href} className={className} onClick={onClick}>{children}</a>;
+    }
+    return <Link to={link.href} className={className} onClick={onClick}>{children}</Link>;
+  };
 
   return (
     <header className="fixed top-0 left-0 w-full z-50">
@@ -35,17 +45,17 @@ export default function Navbar() {
 
           <div className="flex items-center gap-3 xl:gap-4 2xl:gap-16">
             {/* Logo */}
-            <a href="#" className="font-montserrat text-lg xl:text-xl tracking-[0.1em] 2xl:tracking-[0.2em] font-light uppercase whitespace-nowrap">
+            <Link to="/" className="font-montserrat text-lg xl:text-xl tracking-[0.1em] 2xl:tracking-[0.2em] font-light uppercase whitespace-nowrap">
               <span className="text-[#808000]">Z'IONIC</span> <span className="font-bold">ARC</span>
-            </a>
+            </Link>
 
             {/* Desktop Nav Links */}
             <ul className="hidden xl:flex items-center gap-6 font-outfit text-[11px] font-medium uppercase tracking-[0.1em] text-black">
               {navLinks.filter(link => link.label !== "Contact").map((link) => (
                 <li key={link.label}>
-                  <a href={link.href} className="hover:text-black/40 transition-colors whitespace-nowrap">
+                  <LinkComponent link={link} className="hover:text-black/40 transition-colors whitespace-nowrap">
                     {link.label}
-                  </a>
+                  </LinkComponent>
                 </li>
               ))}
             </ul>
@@ -54,12 +64,12 @@ export default function Navbar() {
           {/* Desktop Right Action */}
           <div className="hidden xl:flex items-center">
             {settings.showContact && (
-              <a
-                href="#contact"
+              <LinkComponent
+                link={{ href: isHomePage ? "#contact" : "/#contact" }}
                 className="bg-black text-white px-7 py-3.5 rounded-full font-outfit text-[11px] font-bold uppercase tracking-widest transition-all hover:bg-black/80 hover:scale-105 active:scale-95 shadow-xl shadow-black/10 whitespace-nowrap"
               >
                 Start Your Project
-              </a>
+              </LinkComponent>
             )}
           </div>
 
@@ -106,24 +116,24 @@ export default function Navbar() {
 
             <div className="flex flex-col gap-5">
               {navLinks.filter(link => link.label !== "Contact").map((link) => (
-                <a
+                <LinkComponent
                   key={link.label}
-                  href={link.href}
+                  link={link}
                   onClick={() => setOpen(false)}
                   className="text-sm font-bold uppercase tracking-widest text-black hover:text-black/40 transition-colors"
                 >
                   {link.label}
-                </a>
+                </LinkComponent>
               ))}
 
               {settings.showContact && (
-                <a
-                  href="#contact"
+                <LinkComponent
+                  link={{ href: isHomePage ? "#contact" : "/#contact" }}
                   onClick={() => setOpen(false)}
                   className="mt-4 bg-black text-white px-6 py-4 rounded-xl font-bold uppercase tracking-widest text-[11px] text-center shadow-lg shadow-black/20 active:scale-95 transition-all"
                 >
                   Start Your Project
-                </a>
+                </LinkComponent>
               )}
             </div>
           </div>

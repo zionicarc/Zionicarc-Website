@@ -30,7 +30,22 @@ export const SiteProvider = ({ children }) => {
         gallery: {
             title: "Gallery",
             description: "Curated moments from our portfolio.",
-            images: []
+            sections: [
+                {
+                    title: "Residential Projects",
+                    images: [
+                        { url: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop", title: "Modern Villa" },
+                        { url: "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=2070&auto=format&fit=crop", title: "Contemporary Kitchen" }
+                    ]
+                },
+                {
+                    title: "Commercial Spaces",
+                    images: [
+                        { url: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2069&auto=format&fit=crop", title: "Tech Office" },
+                        { url: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?q=80&w=2069&auto=format&fit=crop", title: "Lounge Area" }
+                    ]
+                }
+            ]
         },
         hero: {
             title: "Z'IONIC ARC",
