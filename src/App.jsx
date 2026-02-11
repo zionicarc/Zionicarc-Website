@@ -4,6 +4,7 @@ import { SiteProvider, useSite } from "./context/SiteContext";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
+import Vision from "./components/Vision";
 import Expertise from "./components/OurExpertise";
 import Footer from "./components/Footer";
 
@@ -46,6 +47,7 @@ const MainSite = () => {
       <main>
         <Hero />
         {settings.showAbout && <About />}
+        {settings.showVision && <Vision />}
         {settings.showExpertise && <Expertise />}
         {settings.showApproach && (
           <Suspense fallback={<SectionLoader />}>

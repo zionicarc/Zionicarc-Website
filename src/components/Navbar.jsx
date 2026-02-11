@@ -18,6 +18,7 @@ export default function Navbar() {
   const navLinks = [
     { label: "Home", href: "#", show: true },
     { label: "About Us", href: "#about", show: settings.showAbout },
+    { label: "Our Vision", href: "#vision", show: settings.showVision },
     { label: "Our Expertise", href: "#expertise", show: settings.showExpertise },
     { label: "Our Approach", href: "#approach", show: settings.showApproach },
     { label: "Our Services", href: "#detailed-services", show: settings.showServices },
@@ -35,7 +36,7 @@ export default function Navbar() {
           <div className="flex items-center gap-16">
             {/* Logo */}
             <a href="#" className="font-montserrat text-lg xl:text-xl tracking-[0.2em] font-light uppercase">
-              Z'IONIC <span className="font-bold">ARC</span>
+              <span className="text-[#808000]">Z'IONIC</span> <span className="font-bold">ARC</span>
             </a>
 
             {/* Desktop Nav Links */}

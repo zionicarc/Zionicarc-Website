@@ -5,14 +5,15 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 
 // Actual Firebase Configuration provided by the user
+// Firebase Configuration pulled from environment variables
 const firebaseConfig = {
-    apiKey: "AIzaSyCrkLXYcBAKntJe-u1PD13e0IF0mkqeRww",
-    authDomain: "z-ionic-arc.firebaseapp.com",
-    projectId: "z-ionic-arc",
-    storageBucket: "z-ionic-arc.firebasestorage.app",
-    messagingSenderId: "436666752422",
-    appId: "1:436666752422:web:e3adc7db6c7e0df9c90367",
-    measurementId: "G-J9YTF6X8BF"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
 const app = initializeApp(firebaseConfig);

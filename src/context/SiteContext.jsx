@@ -19,6 +19,7 @@ const deepMerge = (target, source) => {
 export const SiteProvider = ({ children }) => {
     const defaultSettings = {
         showAbout: true,
+        showVision: true,
         showExpertise: true,
         showApproach: true,
         showServices: true,
@@ -34,6 +35,10 @@ export const SiteProvider = ({ children }) => {
         about: {
             title: "About Us",
             description: "An architecture and design firm specialized in creating innovative, functional, and aesthetically pleasing spaces across residential, commercial, and hospitality sectors. Each project is a unique reflection of our clients' vision, values and aspirations, thoughtfully translated into meaningful design with precision, care and creativity."
+        },
+        vision: {
+            title: "Our Vision",
+            description: "Our vision is to serve as faithful stewards of creation, designing spaces that align with God’s purpose, reflect His Kingdom on Earth, and restore harmony between humanity and nature.\n\nThrough sustainable, climate-responsive architecture, we seek to protect, heal, and regenerate the environment, honoring the land, respecting existing ecosystems, and enabling both people and nature to flourish in their fullest potential."
         },
         expertise: {
             title: "Our Expertise",

@@ -26,7 +26,7 @@ export default function Footer({ onOpenTerms, onOpenPrivacy }) {
           {/* Brand Identity */}
           <div className="space-y-6">
             <a href="#" className="font-montserrat text-xl tracking-[0.3em] font-normal uppercase">
-              {settings.footer.brandName.split(' ')[0]} <span className="font-bold">{settings.footer.brandName.split(' ').slice(1).join(' ')}</span>
+              <span className="text-[#808000]">{settings.footer.brandName.split(' ')[0]}</span> <span className="font-bold">{settings.footer.brandName.split(' ').slice(1).join(' ')}</span>
             </a>
             <p className="text-gray-500 text-sm leading-relaxed max-w-xs font-normal">
               {settings.footer.tagline}

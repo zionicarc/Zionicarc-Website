@@ -177,6 +177,7 @@ export default function AdminDashboard() {
         { id: 'general', label: 'General', icon: Home },
         { id: 'hero', label: 'Hero', icon: Layout },
         { id: 'about', label: 'About', icon: Info },
+        { id: 'vision', label: 'Vision', icon: Eye },
         { id: 'expertise', label: 'Expertise', icon: Briefcase },
         { id: 'approach', label: 'Approach', icon: Zap },
         { id: 'services', label: 'Services', icon: Heart },
@@ -252,6 +253,7 @@ export default function AdminDashboard() {
                                     <div className="space-y-4">
                                         {[
                                             { id: 'showAbout', label: 'About Us Section' },
+                                            { id: 'showVision', label: 'Our Vision Section' },
                                             { id: 'showExpertise', label: 'Our Expertise Section' },
                                             { id: 'showApproach', label: 'Our Approach Section' },
                                             { id: 'showServices', label: 'Our Services Section' },
@@ -338,6 +340,34 @@ export default function AdminDashboard() {
                                                 className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black focus:outline-none focus:border-black/10 transition-all resize-none leading-relaxed font-outfit"
                                                 value={localSettings.about.description}
                                                 onChange={(e) => updateField('about', 'description', e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeTab === 'vision' && (
+                                <div className="space-y-8">
+                                    <header>
+                                        <h3 className="text-2xl font-bold uppercase tracking-tight mb-2">Vision Section</h3>
+                                        <p className="text-gray-500 text-sm">Define your studio's long-term aspirations.</p>
+                                    </header>
+                                    <div className="space-y-6">
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Section Title</label>
+                                            <input
+                                                className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black focus:outline-none focus:border-black/10 transition-all font-outfit"
+                                                value={localSettings.vision.title}
+                                                onChange={(e) => updateField('vision', 'title', e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Vision Statement</label>
+                                            <textarea
+                                                rows={6}
+                                                className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black focus:outline-none focus:border-black/10 transition-all resize-none leading-relaxed font-outfit"
+                                                value={localSettings.vision.description}
+                                                onChange={(e) => updateField('vision', 'description', e.target.value)}
                                             />
                                         </div>
                                     </div>
