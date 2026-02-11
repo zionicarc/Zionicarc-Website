@@ -24,8 +24,14 @@ export const SiteProvider = ({ children }) => {
         showApproach: true,
         showServices: true,
         showProjects: true,
+        showGallery: true,
         showWhyChooseUs: true,
         showContact: true,
+        gallery: {
+            title: "Gallery",
+            description: "Curated moments from our portfolio.",
+            images: []
+        },
         hero: {
             title: "Z'IONIC ARC",
             tagline: "Redefine the skyline. We craft spaces that merge human experience with distinct architectural geometry.",

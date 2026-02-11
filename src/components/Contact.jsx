@@ -22,7 +22,7 @@ export default function Contact() {
 
             <div className="inline-flex items-center gap-2 md:gap-3 px-6 py-3 bg-[#f9f9f9] rounded-2xl border border-black/5 mt-2 transition-all">
               <div className="w-2 h-2 bg-black/40 rounded-full shrink-0" />
-              <p className="text-xs font-bold uppercase tracking-[0.25em] text-black/60 whitespace-nowrap">
+              <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.1em] md:tracking-[0.25em] text-black/60">
                 {settings.footer.timings}
               </p>
             </div>
@@ -37,10 +37,10 @@ export default function Contact() {
               onClick={(e) => handleWhatsAppClick(e, data.whatsapp)}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center p-6 md:p-8 bg-white border border-[#25D366]/20 rounded-[3rem] transition-all duration-300 hover:shadow-xl hover:shadow-[#25D366]/5 hover:-translate-y-1"
+              className="group flex items-center p-5 md:p-8 bg-white border border-[#25D366]/20 rounded-[2.5rem] md:rounded-[3rem] transition-all duration-300 hover:shadow-xl hover:shadow-[#25D366]/5 hover:-translate-y-1"
             >
-              <div className="flex items-center gap-6 md:gap-8 w-full">
-                <div className="w-16 h-16 bg-[#25D366] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#25D366]/20 transition-all duration-300 group-hover:scale-110 shrink-0">
+              <div className="flex items-center gap-5 md:gap-8 w-full">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-[#25D366] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-[#25D366]/20 transition-all duration-300 group-hover:scale-110 shrink-0">
                   <MessageCircle className="w-8 h-8" strokeWidth={1.5} />
                 </div>
                 <div className="flex flex-col gap-1">
@@ -54,15 +54,15 @@ export default function Contact() {
             <a
               href={`mailto:${data.email}`}
               onClick={handleEmailClick}
-              className="group flex items-center p-6 md:p-8 bg-white border border-black/5 rounded-[3rem] transition-all duration-300 hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1"
+              className="group flex items-center p-5 md:p-8 bg-white border border-black/5 rounded-[2.5rem] md:rounded-[3rem] transition-all duration-300 hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1"
             >
-              <div className="flex items-center gap-6 md:gap-8 w-full">
-                <div className="w-16 h-16 bg-white border border-black/5 rounded-2xl flex items-center justify-center text-black shadow-sm transition-all duration-300 group-hover:scale-110 shrink-0">
+              <div className="flex items-center gap-5 md:gap-8 w-full overflow-hidden">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-white border border-black/5 rounded-2xl flex items-center justify-center text-black shadow-sm transition-all duration-300 group-hover:scale-110 shrink-0">
                   <Mail className="w-8 h-8" strokeWidth={1.5} />
                 </div>
                 <div className="flex flex-col gap-1">
                   <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">Email Address</span>
-                  <span className="text-xl md:text-3xl font-normal text-black tracking-tight">{data.email}</span>
+                  <span className="text-base md:text-3xl font-normal text-black tracking-tight break-all">{data.email}</span>
                 </div>
               </div>
             </a>
@@ -71,15 +71,15 @@ export default function Contact() {
             <a
               href={`tel:${data.phone.replace(/\s+/g, '')}`}
               onClick={(e) => handlePhoneClick(e, data.phone.replace(/\s+/g, ''))}
-              className="group flex items-center p-6 md:p-8 bg-white border border-black/5 rounded-[3rem] transition-all duration-300 hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1"
+              className="group flex items-center p-5 md:p-8 bg-white border border-black/5 rounded-[2.5rem] md:rounded-[3rem] transition-all duration-300 hover:shadow-xl hover:shadow-black/5 hover:-translate-y-1"
             >
-              <div className="flex items-center gap-6 md:gap-8 w-full">
-                <div className="w-16 h-16 bg-white border border-black/5 rounded-2xl flex items-center justify-center text-black shadow-sm transition-all duration-300 group-hover:scale-110 shrink-0">
+              <div className="flex items-center gap-5 md:gap-8 w-full">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-white border border-black/5 rounded-2xl flex items-center justify-center text-black shadow-sm transition-all duration-300 group-hover:scale-110 shrink-0">
                   <Phone className="w-8 h-8" strokeWidth={1.5} />
                 </div>
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1 overflow-hidden">
                   <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400">Phone Line</span>
-                  <span className="text-xl md:text-3xl font-normal text-black tracking-tight">{data.phone}</span>
+                  <span className="text-xl md:text-3xl font-normal text-black tracking-tight whitespace-nowrap overflow-ellipsis">{data.phone}</span>
                 </div>
               </div>
             </a>

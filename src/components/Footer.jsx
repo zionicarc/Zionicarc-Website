@@ -15,6 +15,7 @@ export default function Footer({ onOpenTerms, onOpenPrivacy }) {
     { label: "Our Services", href: "#detailed-services", show: settings.showServices },
     { label: "Why Choose Us", href: "#why-choose-us", show: settings.showWhyChooseUs },
     { label: "Our Work", href: "#projects", show: settings.showProjects },
+    { label: "Gallery", href: "#gallery", show: settings.showGallery },
     { label: "Start a Project", href: "#contact", show: settings.showContact },
   ].filter(link => link.show);
 

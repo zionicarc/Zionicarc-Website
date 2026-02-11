@@ -182,6 +182,7 @@ export default function AdminDashboard() {
         { id: 'approach', label: 'Approach', icon: Zap },
         { id: 'services', label: 'Services', icon: Heart },
         { id: 'projects', label: 'Projects', icon: Briefcase },
+        { id: 'gallery', label: 'Gallery', icon: Layout },
         { id: 'whyChooseUs', label: 'Why Choose Us', icon: Heart },
         { id: 'contact', label: 'Contact', icon: Mail },
         { id: 'footer', label: 'Footer', icon: Info },
@@ -258,6 +259,7 @@ export default function AdminDashboard() {
                                             { id: 'showApproach', label: 'Our Approach Section' },
                                             { id: 'showServices', label: 'Our Services Section' },
                                             { id: 'showProjects', label: 'Our Work (Projects) Section' },
+                                            { id: 'showGallery', label: 'Gallery Section' },
                                             { id: 'showWhyChooseUs', label: 'Why Choose Us Section' },
                                             { id: 'showContact', label: 'Contact Section' }
                                         ].map((toggle) => (
@@ -578,6 +580,90 @@ export default function AdminDashboard() {
                                                     </div>
                                                 ))}
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeTab === 'gallery' && (
+                                <div className="space-y-8">
+                                    <header className="flex items-center justify-between">
+                                        <div>
+                                            <h3 className="text-2xl font-bold uppercase tracking-tight mb-2">Gallery Section</h3>
+                                            <p className="text-gray-500 text-sm">Manage portfolio images. Supports JPG, PNG, HEIC.</p>
+                                        </div>
+                                        <div className="flex items-center gap-4 bg-white border border-black/5 p-4 rounded-2xl shadow-sm">
+                                            <div className="text-right">
+                                                <h4 className="font-bold uppercase text-[10px] text-black">Section Visibility</h4>
+                                                <p className="text-[9px] text-gray-400 font-medium">Toggle on the Home Page</p>
+                                            </div>
+                                            <button
+                                                onClick={() => setLocalSettings(prev => ({ ...prev, showGallery: !prev.showGallery }))}
+                                                className={`relative w-14 h-7 rounded-full transition-all flex items-center px-1 ${localSettings.showGallery ? 'bg-black' : 'bg-gray-100 border border-black/5'}`}
+                                            >
+                                                <div className={`w-5 h-5 rounded-full transition-all flex items-center justify-center ${localSettings.showGallery ? 'bg-white translate-x-7' : 'bg-gray-300'}`}>
+                                                    {localSettings.showGallery ? <Eye size={10} className="text-black" /> : <EyeOff size={10} className="text-gray-600" />}
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </header>
+                                    <div className="space-y-6">
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Section Title</label>
+                                            <input className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit" value={localSettings.gallery.title} onChange={(e) => updateField('gallery', 'title', e.target.value)} />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Description</label>
+                                            <textarea className="w-full bg-white border border-black/5 rounded-xl px-4 py-4 text-black font-outfit" rows={2} value={localSettings.gallery.description} onChange={(e) => updateField('gallery', 'description', e.target.value)} />
+                                        </div>
+
+                                        <div className="space-y-4 pt-6 mt-6 border-t border-black/5">
+                                            <div className="flex justify-between items-center">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Gallery Images</label>
+                                                <div className="flex items-center gap-4">
+                                                    <span className="text-[10px] text-gray-400">Add New Image:</span>
+                                                    <div className="w-40">
+                                                        <ImageUpload
+                                                            onUploadComplete={(url) => {
+                                                                setLocalSettings(prev => ({
+                                                                    ...prev,
+                                                                    gallery: {
+                                                                        ...prev.gallery,
+                                                                        images: [...prev.gallery.images, url]
+                                                                    }
+                                                                }));
+                                                            }}
+                                                            acceptedFiles="image/*,.heic,.heif"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                                {localSettings.gallery.images.map((img, idx) => (
+                                                    <div key={idx} className="relative group aspect-square rounded-xl overflow-hidden bg-gray-100 border border-black/5">
+                                                        <img src={img} alt="" className="w-full h-full object-cover" />
+                                                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                            <button
+                                                                onClick={() => window.confirm('Delete this image?') && setLocalSettings(prev => ({
+                                                                    ...prev,
+                                                                    gallery: {
+                                                                        ...prev.gallery,
+                                                                        images: prev.gallery.images.filter((_, i) => i !== idx)
+                                                                    }
+                                                                }))}
+                                                                className="p-2 bg-white rounded-full text-red-500 hover:bg-red-50 transition-colors"
+                                                            >
+                                                                <Trash2 size={16} />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            {localSettings.gallery.images.length === 0 && (
+                                                <div className="text-center py-12 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
+                                                    <p className="text-gray-400 text-sm">No images yet. Upload one to get started.</p>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>

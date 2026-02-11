@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 const OurApproach = lazy(() => import("./components/OurApproach"));
 const ServicesDetail = lazy(() => import("./components/ServicesDetail"));
 const Projects = lazy(() => import("./components/Projects"));
+const Gallery = lazy(() => import("./components/Gallery"));
 const WhyChooseUs = lazy(() => import("./components/WhyChooseUs"));
 const Contact = lazy(() => import("./components/Contact"));
 const TermsOfService = lazy(() => import("./components/TermsOfService"));
@@ -64,6 +65,12 @@ const MainSite = () => {
         {settings.showProjects && (
           <Suspense fallback={<SectionLoader />}>
             <Projects />
+          </Suspense>
+        )}
+
+        {settings.showGallery && (
+          <Suspense fallback={<SectionLoader />}>
+            <Gallery />
           </Suspense>
         )}
 
