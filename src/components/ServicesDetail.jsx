@@ -17,11 +17,7 @@ export default function ServicesDetail() {
     };
 
     return (
-<<<<<<< HEAD
         <section id="detailed-services" className="pt-12 pb-24 bg-white">
-=======
-        <section id="detailed-services" className="py-24 bg-white">
->>>>>>> 7e6ed5b311fd7f19ca88fa2d0c9e51c03f139dd0
             <div className="max-w-7xl mx-auto px-6 md:px-8">
 
                 {/* Section Heading */}

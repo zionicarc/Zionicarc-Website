@@ -6,11 +6,7 @@ export default function OurApproach() {
   const approach = settings.approach;
 
   return (
-<<<<<<< HEAD
     <section id="approach" className="pt-24 pb-12 bg-white overflow-hidden">
-=======
-    <section id="approach" className="py-24 bg-white overflow-hidden">
->>>>>>> 7e6ed5b311fd7f19ca88fa2d0c9e51c03f139dd0
       <div className="max-w-7xl mx-auto px-6 md:px-8">
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
