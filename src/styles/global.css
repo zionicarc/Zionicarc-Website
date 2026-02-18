@@ -1,0 +1,35 @@
+body {
+  font-family: Inter, system-ui, sans-serif;
+  background-color: #ffffff;
+  color: #111111;
+  line-height: 1.7;
+}
+
+section {
+  padding: 120px 0;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+p {
+  max-width: 720px;
+}
+
+/* Global Focus Styles */
+:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  button {
+    font-size: 14px;
+    padding: 0.8em 2em;
+    width: 100%;
+  }
+}
