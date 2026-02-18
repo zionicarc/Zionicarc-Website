@@ -45,16 +45,20 @@ const MainSite = () => {
             <OurApproach />
           </Suspense>
         )}
+        {settings.showProjects && (
+          <Suspense fallback={<SectionLoader />}>
+            <Projects />
+          </Suspense>
+        )}
         {settings.showServices && (
           <Suspense fallback={<SectionLoader />}>
             <ServicesDetail />
           </Suspense>
         )}
 
-        {/* Managed by Admin Toggle */}
-        {settings.showProjects && (
+        {settings.showWhyChooseUs && (
           <Suspense fallback={<SectionLoader />}>
-            <Projects />
+            <WhyChooseUs />
           </Suspense>
         )}
 
@@ -64,12 +68,6 @@ const MainSite = () => {
           </Suspense>
         )}
 
-
-        {settings.showWhyChooseUs && (
-          <Suspense fallback={<SectionLoader />}>
-            <WhyChooseUs />
-          </Suspense>
-        )}
         {settings.showContact && (
           <Suspense fallback={<SectionLoader />}>
             <Contact />

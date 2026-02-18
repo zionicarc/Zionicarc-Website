@@ -62,8 +62,8 @@ export default function Gallery() {
                 <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-16 gap-6 text-center md:text-left">
                     <div className="space-y-4 w-full md:w-auto">
                         <h2
-                            className="text-3xl md:text-5xl font-outfit tracking-tighter leading-[0.9]"
-                            style={{ color: '#000', opacity: 1 }}
+                            className="text-3xl md:text-4xl font-outfit font-light tracking-tighter text-black leading-[0.9]"
+                            style={{ opacity: 1 }}
                         >
                             {data.title}
                         </h2>
