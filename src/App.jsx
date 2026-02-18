@@ -1,6 +1,5 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Building2 } from "lucide-react";
 import { SiteProvider, useSite } from "./context/SiteContext";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -31,20 +30,7 @@ const SectionLoader = () => (
 const MainSite = () => {
   const [isTermsOpen, setIsTermsOpen] = React.useState(false);
   const [isPrivacyOpen, setIsPrivacyOpen] = React.useState(false);
-  const { settings, loading } = useSite();
-
-  if (loading) {
-    return (
-      <div className="fixed inset-0 bg-white z-[100] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <Building2 className="w-14 h-14 text-black animate-pulse" strokeWidth={1.5} />
-          <p className="font-montserrat text-xs font-light uppercase tracking-[0.2em] animate-pulse">
-            <span className="text-[#808000]">Z'IONIC</span> <span className="font-bold text-black">ARC</span>
-          </p>
-        </div>
-      </div>
-    );
-  }
+  const { settings } = useSite();
 
   return (
     <>
