@@ -89,7 +89,7 @@ export const SiteProvider = ({ children }) => {
                 { title: "Institutional Architecture", desc: "We specialize in designing institutional buildings that inspire learning, collaboration, and community engagement.", img: "" },
                 { title: "Commercial Architecture", desc: "We create spaces that transform employee well-being, boost productivity, and represent your brand’s personality.", img: "" },
                 { title: "Construction Monitoring", desc: "Regular site visits and progress reports to verify contractor performance and quality.", img: "" },
-                { title: "Fellowship and Mentorship", desc: "Z'IONIC ARC is committed to building an inclusive and equitable workplace by investing in programs that support mentorship.", img: "https://unsplash.com/photos/TltGIe9PK4Y/download?force=true&w=2070" }
+                { title: "Fellowship and Mentorship", desc: "Z'IONIC ARC is committed to building an inclusive and equitable workplace by investing in programs that support mentorship.", img: "" }
             ]
         },
         whyChooseUs: {

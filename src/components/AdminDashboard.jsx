@@ -524,7 +524,7 @@ function AdminDashboard() {
                                                     onChange={(e) => updateListItem('services', 'items', idx, 'img', e.target.value)}
                                                     placeholder="https://images.unsplash.com/photo-xxx or any image URL"
                                                 />
-                                                <p className="text-xs text-gray-500 mt-1">Paste an Unsplash link or any direct image URL.</p>
+                                                <p className="text-xs text-gray-500 mt-1">Use a direct image URL (e.g. https://images.unsplash.com/photo-...). Right‑click the image on Unsplash → Copy image address. Do not paste the photo page link (unsplash.com/photos/...).</p>
                                             </div>
                                         </div>
                                     ))}
