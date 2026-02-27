@@ -66,6 +66,11 @@ const TermsOfService = ({ isOpen, onClose }) => {
                                         ))}
                                     </ul>
                                 )}
+                                {section.secondaryContent && (
+                                    <p className="text-gray-400 text-sm leading-relaxed font-normal">
+                                        {section.secondaryContent}
+                                    </p>
+                                )}
                             </div>
                         </div>
                     ))}

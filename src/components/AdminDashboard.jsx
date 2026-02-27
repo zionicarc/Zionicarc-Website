@@ -9,7 +9,7 @@ import { auth } from '../lib/firebase';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 
 function AdminDashboard() {
-    const { settings, updateSettings, loading } = useSite();
+    const { settings, updateSettings, syncLegalToFirebase, getDefaultLegalDocuments, loading } = useSite();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [user, setUser] = useState(null);
@@ -18,6 +18,7 @@ function AdminDashboard() {
     const [activeLegalTab, setActiveLegalTab] = useState('privacy');
     const [localSettings, setLocalSettings] = useState(settings);
     const [isSaving, setIsSaving] = useState(false);
+    const [isSyncingLegal, setIsSyncingLegal] = useState(false);
     const navigate = useNavigate();
 
     React.useEffect(() => {
@@ -1102,8 +1103,48 @@ function AdminDashboard() {
                         {/* Legal Section */}
                         {activeTab === 'legal' && (
                             <div className="space-y-6">
-                                <h2 className="text-2xl font-bold text-gray-900 mb-6">Legal Documents</h2>
-                                
+                                <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+                                    <h2 className="text-2xl font-bold text-gray-900">Legal Documents</h2>
+                                    <div className="flex gap-3">
+                                        <button
+                                            onClick={() => {
+                                                if (!getDefaultLegalDocuments) return;
+                                                const defaults = getDefaultLegalDocuments();
+                                                setLocalSettings(prev => ({
+                                                    ...prev,
+                                                    privacyPolicy: defaults.privacyPolicy,
+                                                    termsOfService: defaults.termsOfService
+                                                }));
+                                                alert('✅ Loaded latest Privacy Policy and Terms of Service into the form. Click Save to persist.');
+                                            }}
+                                            disabled={!getDefaultLegalDocuments}
+                                            className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
+                                        >
+                                            <FileText size={16} />
+                                            Load Latest Text
+                                        </button>
+                                        <button
+                                            onClick={async () => {
+                                                if (!syncLegalToFirebase) return;
+                                                setIsSyncingLegal(true);
+                                                try {
+                                                    await syncLegalToFirebase();
+                                                    alert('✅ Privacy Policy and Terms of Service synced to Firebase successfully!');
+                                                } catch (err) {
+                                                    alert('❌ Error syncing to Firebase: ' + err.message);
+                                                } finally {
+                                                    setIsSyncingLegal(false);
+                                                }
+                                            }}
+                                            disabled={!syncLegalToFirebase || isSyncingLegal}
+                                            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                                        >
+                                            <Save size={16} />
+                                            {isSyncingLegal ? 'Syncing...' : 'Sync Legal to Firebase'}
+                                        </button>
+                                    </div>
+                                </div>
+
                                 {/* Sub Navigation for Legal */}
                                 <div className="flex gap-3 mb-6 border-b border-gray-200">
                                     <button
@@ -1140,7 +1181,7 @@ function AdminDashboard() {
                                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                                     value={localSettings.privacyPolicy?.lastUpdated || ''}
                                                     onChange={(e) => updateField('privacyPolicy', 'lastUpdated', e.target.value)}
-                                                    placeholder="December 2025"
+                                                    placeholder="February 27, 2026"
                                                 />
                                             </div>
                                             <div className="flex items-center justify-between pt-4">
@@ -1227,7 +1268,7 @@ function AdminDashboard() {
                                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                                     value={localSettings.termsOfService?.lastUpdated || ''}
                                                     onChange={(e) => updateField('termsOfService', 'lastUpdated', e.target.value)}
-                                                    placeholder="December 2025"
+                                                    placeholder="February 27, 2026"
                                                 />
                                             </div>
                                             <div className="flex items-center justify-between pt-4">
