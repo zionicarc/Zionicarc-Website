@@ -195,6 +195,7 @@ function AdminDashboard() {
         { id: 'general', label: 'General Settings', icon: Home },
         { id: 'hero', label: 'Hero Section', icon: Home },
         { id: 'about', label: 'About', icon: Info },
+        { id: 'founder', label: 'Founder', icon: Briefcase },
         { id: 'vision', label: 'Vision', icon: Eye },
         { id: 'expertise', label: 'Expertise', icon: Briefcase },
         { id: 'approach', label: 'Approach', icon: Zap },
@@ -299,7 +300,7 @@ function AdminDashboard() {
                                 <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
                                     <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">Section Visibility</h3>
                                     <div className="space-y-2 sm:space-y-3">
-                                        {['about', 'vision', 'expertise', 'approach', 'services', 'projects', 'gallery', 'whyChooseUs', 'contact'].map(section => {
+                                        {['about', 'founder', 'vision', 'expertise', 'approach', 'services', 'projects', 'gallery', 'whyChooseUs', 'contact'].map(section => {
                                             const isVisible = localSettings[`show${section.charAt(0).toUpperCase() + section.slice(1)}`];
                                             return (
                                                 <label key={section} className="flex items-center justify-between p-2 sm:p-3 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors">
@@ -442,6 +443,64 @@ function AdminDashboard() {
                                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                                             value={localSettings.vision?.description || ''}
                                             onChange={(e) => updateField('vision', 'description', e.target.value)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Founder Section */}
+                        {activeTab === 'founder' && (
+                            <div className="space-y-6">
+                                <h2 className="text-2xl font-bold text-gray-900 mb-6">Founder Section</h2>
+                                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 space-y-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">Section Title</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                value={localSettings.founder?.title || ''}
+                                                onChange={(e) => updateField('founder', 'title', e.target.value)}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                value={localSettings.founder?.image || ''}
+                                                onChange={(e) => updateField('founder', 'image', e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">Founder Name</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                value={localSettings.founder?.name || ''}
+                                                onChange={(e) => updateField('founder', 'name', e.target.value)}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-2">Subtitle / Title</label>
+                                            <input
+                                                type="text"
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                                value={localSettings.founder?.subtitle || ''}
+                                                onChange={(e) => updateField('founder', 'subtitle', e.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">Biography (Use double enter for paragraphs)</label>
+                                        <textarea
+                                            rows="10"
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                            value={localSettings.founder?.bio || ''}
+                                            onChange={(e) => updateField('founder', 'bio', e.target.value)}
                                         />
                                     </div>
                                 </div>

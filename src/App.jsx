@@ -19,6 +19,7 @@ const GalleryPage = lazy(() => import("./pages/GalleryPage"));
 const TermsOfService = lazy(() => import("./components/TermsOfService"));
 const PrivacyPolicy = lazy(() => import("./components/PrivacyPolicy"));
 const AdminDashboard = lazy(() => import("./components/AdminDashboard"));
+const AboutFounder = lazy(() => import("./pages/AboutFounder"));
 
 // Simple lightweight loading component
 const SectionLoader = () => (
@@ -93,6 +94,11 @@ const App = () => {
       <SiteProvider>
         <Routes>
           <Route path="/" element={<MainSite />} />
+          <Route path="/about-founder" element={
+            <Suspense fallback={<div className="h-screen bg-white" />}>
+              <AboutFounder />
+            </Suspense>
+          } />
           <Route path="/gallery" element={
             <Suspense fallback={<div className="h-screen bg-white" />}>
               <GalleryPage />

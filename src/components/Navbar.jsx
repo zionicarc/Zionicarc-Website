@@ -20,6 +20,7 @@ export default function Navbar() {
   const navLinks = [
     { label: "Home", href: "/", isExternal: true, show: true },
     { label: "About Us", href: isHomePage ? "#about" : "/#about", show: settings.showAbout },
+    { label: "The Founder", href: "/about-founder", isExternal: true, show: settings.showFounder },
     { label: "Our Vision", href: isHomePage ? "#vision" : "/#vision", show: settings.showVision },
     { label: "Our Expertise", href: isHomePage ? "#expertise" : "/#expertise", show: settings.showExpertise },
     { label: "Our Approach", href: isHomePage ? "#approach" : "/#approach", show: settings.showApproach },

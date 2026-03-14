@@ -27,6 +27,14 @@ export const SiteProvider = ({ children }) => {
         showGallery: true,
         showWhyChooseUs: true,
         showContact: true,
+        showFounder: true,
+        founder: {
+            title: "About The Founder",
+            name: "Jobi Sam",
+            subtitle: "Principal Architect & Design Leader",
+            bio: "The founder of Zionic Arc is a seasoned architect and design leader, bringing expertise as a Principal Architect, Design Manager, Project Manager, and Studio Manager. With a Bachelor of Architecture from RV Engineering College, one of India’s top institutions, she combines strong academic foundations with hands-on experience in end-to-end design solutions and design thinking.\n\nShe honed her architectural skills as Lead Architect at John Jacob - Architects, Planners, Interiors, under the mentorship of a former team member of the legendary Charles Correa, embracing the philosophy of \"improving what already exists.\" During this time, her studio achieved remarkable recognition, winning major competitions including Police Bhawan, Data Center, Cloud Chamber, among others.\n\nAs Studio Manager and Design head at Mathew and Ghosh Architects - one of India's influential voices in architecture and design , she led many high-impact projects such as House of stories , Freedom Park and the National Martyr’s Memorial, earning numerous national and international awards.\n\nDriven by a vision to create meaningful, context - sensitive architecture, she founded Zionic Arc, successfully completing numerous projects across South India, delivering innovative and holistic design solutions that resonate with people and place.",
+            image: "https://res.cloudinary.com/dzyk4azzd/image/upload/v1773461635/photo.jpg_dgefuy.jpg"
+        },
         gallery: {
             title: "Gallery",
             description: "Curated moments from our portfolio.",
